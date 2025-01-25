@@ -98,3 +98,31 @@ object DestinasiUpdateJenis : DestinasiNavigasi {
     val routesWithArg = "$route/{$IDJENIS}"
 }
 
+// PROPERTI
+object DestinasiHomeProperti : DestinasiNavigasi {
+    override val route = "homeProperti"
+    override val titleRes: String = "Home Properti"
+    const val IDPROPERTI = "id_properti"
+    val routesWithArg = "$route/{$IDPROPERTI}"
+}
+
+object DestinasiInsertProperti : DestinasiNavigasi {
+    override val route = "insertProperti"
+    override val titleRes: String = "Tambah Properti"
+    const val IDPROPERTI = "id_properti"
+    val routesWithArg = "$route/{$IDPROPERTI}"
+}
+
+object DestinasiDetailProperti : DestinasiNavigasi {
+    override val route = "detailPropertis"
+    override val titleRes = "Detail Properti"
+    const val IDPROPERTI = "id_properti"
+    val routesWithArg = "$route/{$IDPROPERTI}"
+}
+
+object DestinasiUpdateProperti : DestinasiNavigasi {
+    override val route = "updateProperti"
+    override val titleRes = "Update Properti"
+    const val IDPROPERTI = "id_properti"
+    val routesWithArg = "$route/{$IDPROPERTI}"
+}
