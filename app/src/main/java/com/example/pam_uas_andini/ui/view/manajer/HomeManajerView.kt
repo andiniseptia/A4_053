@@ -48,6 +48,31 @@ import com.example.pam_uas_andini.ui.viewmodel.pemilik.HomePemilikUiState
 import com.example.pam_uas_andini.ui.viewmodel.pemilik.HomePemilikViewModel
 
 
+@Composable
+fun MnjLayout(
+    manajer: List<Manajer>,
+    modifier: Modifier = Modifier,
+    onDetailClick: (Manajer) -> Unit,
+    onDeleteClick: (Manajer) -> Unit = {}
+) {
+    LazyColumn (
+        modifier = modifier,
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        items(manajer) { manajer ->
+            MnjCard(
+                manajer = manajer,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onDetailClick(manajer) },
+                onDeleteClick = {
+                    onDeleteClick(manajer)
+                }
+            )
+        }
+    }
+}
 
 @Composable
 fun MnjCard(
