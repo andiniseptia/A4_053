@@ -27,6 +27,31 @@ import com.example.pam_uas_andini.ui.viewmodel.manajer.ManajerUiEvent
 import com.example.pam_uas_andini.ui.viewmodel.manajer.ManajerUiState
 import kotlinx.coroutines.launch
 
+@Composable
+fun EntryBodyManajer(
+    manajerUiState: ManajerUiState,
+    onManajerValueChange: (ManajerUiEvent) -> Unit,
+    onSaveClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column (
+        verticalArrangement = Arrangement.spacedBy(18.dp),
+        modifier = modifier.padding(12.dp)
+    ) {
+        FormManajer(
+            manajerUiEvent = manajerUiState.manajerUiEvent,
+            onValueChange = onManajerValueChange,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Button(
+            onClick = onSaveClick,
+            shape = MaterialTheme.shapes.small,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "Simpan")
+        }
+    }
+}
 
 @Composable
 fun FormManajer(
