@@ -25,3 +25,51 @@ interface PropertiRepository {
     suspend fun getManajer(): ManajerResponse
 }
 
+class NetworkPropertiRepository(
+    private val propertiApiService: PropertiService
+) : PropertiRepository {
+
+    override suspend fun insertProperti(properti: Properti) {
+        propertiApiService.insertProperti(properti)
+    }
+
+    override suspend fun updateProperti(id_properti: String, properti: Properti) {
+        propertiApiService.updateProperti(id_properti, properti)
+    }
+
+    override suspend fun deleteProperti(id_properti: String) {
+        try {
+            val response = propertiApiService.deleteProperti(id_properti)
+            if (!response.isSuccessful) {
+                throw IOException("Failed to delete properti. HTTP Status Code : " +
+                "${response.code()}")
+            } else {
+                response.message()
+                println(response.message())
+            }
+        } catch (e:Exception) {
+            throw e
+        }
+    }
+
+    override suspend fun getProperti(): PropertiResponse {
+        return propertiApiService.getProperti()
+    }
+
+    override suspend fun getPropertiById(id_properti: String): PropertiDetailResponse {
+        return propertiApiService.getPropertiById(id_properti)
+    }
+
+    override suspend fun getJenis(): JenisResponse {
+        return propertiApiService.getJenis()
+    }
+
+    override suspend fun getPemilik(): PemilikResponse {
+        return propertiApiService.getPemilik()
+    }
+
+    override suspend fun getManajer(): ManajerResponse {
+        return propertiApiService.getManajer()
+    }
+
+}
