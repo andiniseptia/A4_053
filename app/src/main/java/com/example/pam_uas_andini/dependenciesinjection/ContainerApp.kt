@@ -64,6 +64,20 @@ class PerusahaanContainer : ContainerApp {
         retrofitProperti.create(PropertiService::class.java)
     }
 
+    override val jenisRepository: JenisRepository by lazy {
+        NetworkJenisRepository(jenisService)
+    }
 
+    override val manajerRepository: ManajerRepository by lazy {
+        NetworkManajerRepository(manajerService)
+    }
+
+    override val pemilikRepository: PemilikRepository by lazy {
+        NetworkPemilikRepository(pemilikService)
+    }
+
+    override val propertiRepository: PropertiRepository by lazy {
+        NetworkPropertiRepository(propertiService)
+    }
 
 }
