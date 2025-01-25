@@ -82,5 +82,63 @@ fun HomeView(
         }
         }
 
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "Selamat Datang Di Nestoria",
+                modifier = Modifier.padding(30.dp),
+                color = colorResource(id = R.color.primary),
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
+
+            Button(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(start = 40.dp, end = 40.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(id = R.color.primary)
+                ),
+                onClick = { viewModel.navigateTo(HomeNavigation.HomeProperti) }) {
+                Text("Kelola Properti")
+            }
+
+            Button(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(start = 40.dp, end = 40.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(id = R.color.primary)
+                ),
+                onClick = { viewModel.navigateTo(HomeNavigation.HomePemilik) }) {
+                Text("Kelola Pemilik")
+            }
+
+            Button(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(start = 40.dp, end = 40.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(id = R.color.primary)
+                ),
+                onClick = { viewModel.navigateTo(HomeNavigation.HomeManajer) }) {
+                Text("Kelola Manajer")
+            }
+
+            Button(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(start = 40.dp, end = 40.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(id = R.color.primary)
+                ),
+                onClick = { viewModel.navigateTo(HomeNavigation.HomeJenis) }) {
+                Text("Kelola Jenis Properti")
+            }
+        }
     }
 }
