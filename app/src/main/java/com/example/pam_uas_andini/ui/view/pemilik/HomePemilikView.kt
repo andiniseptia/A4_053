@@ -43,6 +43,31 @@ import com.example.pam_uas_andini.ui.viewmodel.PenyediaViewModel
 import com.example.pam_uas_andini.ui.viewmodel.pemilik.HomePemilikUiState
 import com.example.pam_uas_andini.ui.viewmodel.pemilik.HomePemilikViewModel
 
+@Composable
+fun PmlLayout(
+    pemilik: List<Pemilik>,
+    modifier: Modifier = Modifier,
+    onDetailClick: (Pemilik) -> Unit,
+    onDeleteClick: (Pemilik) -> Unit = {}
+) {
+    LazyColumn (
+        modifier = modifier,
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        items(pemilik) { pemilik ->
+            PmlCard(
+                pemilik = pemilik,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onDetailClick(pemilik) },
+                onDeleteClick = {
+                    onDeleteClick(pemilik)
+                }
+            )
+        }
+    }
+}
 
 @Composable
 fun PmlCard(
