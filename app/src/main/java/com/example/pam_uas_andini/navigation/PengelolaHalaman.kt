@@ -41,7 +41,27 @@ fun PengelolaHalaman(
         startDestination = DestinasiHome.route,
         modifier = Modifier
     ) {
-
+        // HOME
+        composable(DestinasiHome.route) {
+            println("Navigasi ke HomeView")
+            val viewModel: HomeViewModel = viewModel() // Ambil instance ViewModel yang sama
+            HomeView(
+                navigateToPemilik = {
+                    navController.navigate(DestinasiHomePemilik.route)
+                },
+                navigateToManajer = {
+                    navController.navigate(DestinasiHomeManajer.route)
+                },
+                navigateToJenis = {
+                    navController.navigate(DestinasiHomeJenis.route)
+                },
+                navigateToProperti = {
+                    navController.navigate(DestinasiHomeProperti.route)
+                },
+                navController = navController,
+                viewModel = viewModel // Pass instance ViewModel yang sama
+            )
+        }
 
     }
 }
