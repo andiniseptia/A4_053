@@ -47,6 +47,28 @@ import com.example.pam_uas_andini.ui.viewmodel.manajer.DetailManajerViewModel
 import com.example.pam_uas_andini.ui.viewmodel.pemilik.DetailPemilikUiState
 import com.example.pam_uas_andini.ui.viewmodel.pemilik.DetailPemilikViewModel
 
+@Composable
+fun ComponentDetailManajer(
+    modifier: Modifier = Modifier,
+    judul: String,
+    isinya: String,
+) {
+    Column(modifier = modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.Start
+    ) {
+        Text(
+            text = "$judul : ",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Gray
+        )
+        Text(
+            text = isinya,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
+        )
+    }
+}
 
 @Composable
 private fun DeleteConfirmationDialog(
