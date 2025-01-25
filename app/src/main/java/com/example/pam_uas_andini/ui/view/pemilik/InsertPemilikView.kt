@@ -27,6 +27,43 @@ import com.example.pam_uas_andini.ui.viewmodel.pemilik.InsertPemilikViewModel
 import com.example.pam_uas_andini.ui.viewmodel.pemilik.PemilikUiState
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun InsertPemilikView(
+    navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: InsertPemilikViewModel = viewModel(factory = PenyediaViewModel.Factory)
+) {
+    val coroutineScope = rememberCoroutineScope()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
+    Scaffold (
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiInsertPemilik.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                navigateUp = navigateBack
+            )
+        }
+    ) { innerPadding ->
+        EntryBodyPemilik(
+            pemilikUiState = viewModel.uiState,
+            onPemilikValueChange = viewModel::updateInsertPmlState,
+            onSaveClick = {
+                coroutineScope.launch {
+                    viewModel.insertPml()
+                    navigateBack()
+                }
+            },
+            modifier = Modifier
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+                .fillMaxWidth()
+        )
+    }
+}
 
 @Composable
 fun EntryBodyPemilik(
