@@ -47,6 +47,52 @@ import com.example.pam_uas_andini.ui.viewmodel.manajer.DetailManajerViewModel
 import com.example.pam_uas_andini.ui.viewmodel.pemilik.DetailPemilikUiState
 import com.example.pam_uas_andini.ui.viewmodel.pemilik.DetailPemilikViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DetailManajerView(
+    onBack: () -> Unit = { },
+    onEditClick: () -> Unit = { },
+    onDeleteClick: () -> Unit = { },
+    modifier: Modifier = Modifier,
+    viewModel: DetailManajerViewModel = viewModel(factory = PenyediaViewModel.Factory)
+) {
+    LaunchedEffect(Unit) {
+        viewModel.refreshDetailManajer() // Refresh detail saat halaman ini diluncurkan
+    }
+
+    Scaffold(
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiDetailManajer.titleRes,
+                canNavigateBack = true,
+                //scrollBehavior = scrollBehavior,
+                navigateUp = onBack,
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = onEditClick,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(18.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "Edit Kontak"
+                )
+            }
+        }
+    ) { innerPadding ->
+        DetailStatus(
+            modifier = Modifier.padding(innerPadding),
+            detailManajerUiState = viewModel.detailManajerUiState,
+            onDeleteClick = {
+                viewModel.deleteManajer()
+                onBack()
+            }
+        )
+    }
+}
+
 @Composable
 fun DetailStatus(
     modifier: Modifier = Modifier,
