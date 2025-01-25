@@ -194,5 +194,22 @@ fun PengelolaHalaman(
             )
         }
 
+        composable(
+            DestinasiUpdateManajer.routesWithArg,
+            arguments = listOf(
+                navArgument(DestinasiUpdateManajer.IDMANAJER) {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val id_manajer = it.arguments?.getString(DestinasiUpdateManajer.IDMANAJER)
+            id_manajer?.let { id_manajer ->
+                UpdateManajerView(
+                    onBack = {navController.popBackStack()},
+                    onNavigate = { navController.popBackStack() }
+                )
+            }
+        }
+
     }
 }
