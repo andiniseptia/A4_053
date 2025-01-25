@@ -28,6 +28,55 @@ import com.example.pam_uas_andini.ui.viewmodel.pemilik.DetailPemilikUiState
 import com.example.pam_uas_andini.ui.viewmodel.pemilik.DetailPemilikViewModel
 
 @Composable
+fun DetailStatus(
+    modifier: Modifier = Modifier,
+    detailPemilikUiState: DetailPemilikUiState,
+    onDeleteClick: () -> Unit
+) {
+    var deleteConfirmationRequired by remember { mutableStateOf(false) }
+
+    when (detailPemilikUiState) {
+        is DetailPemilikUiState.Loading -> {
+            Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
+        }
+
+        is DetailPemilikUiState.Success -> {
+            // Access the Pemilik object from the data property
+            val pemilik = detailPemilikUiState.pemilik.data
+            Column(modifier = modifier.padding(16.dp)) {
+                ItemDetailPemilik(pemilik = pemilik)
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Button(
+                    onClick = { deleteConfirmationRequired = true },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = "Delete")
+                }
+
+                if (deleteConfirmationRequired) {
+                    DeleteConfirmationDialog(
+                        onDeleteConfirm = {
+                            deleteConfirmationRequired = false
+                            onDeleteClick()
+                        },
+                        onDeleteCancel = { deleteConfirmationRequired = false }
+                    )
+                }
+            }
+        }
+        is DetailPemilikUiState.Error -> {
+            Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text("Error loading data")
+            }
+        }
+    }
+}
+
+@Composable
 fun ItemDetailPemilik(
     modifier: Modifier = Modifier,
     pemilik: Pemilik
