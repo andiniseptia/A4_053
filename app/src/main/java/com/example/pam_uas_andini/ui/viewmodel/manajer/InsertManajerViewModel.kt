@@ -10,6 +10,21 @@ import com.example.pam_uas_andini.repository.manajer.ManajerRepository
 import kotlinx.coroutines.launch
 
 
+fun ManajerUiEvent.toMnj(): Manajer = Manajer(
+    id_manajer = id_manajer,
+    nama_manajer = nama_manajer,
+    kontak_manajer = kontak_manajer
+)
+
+fun Manajer.toUiStateMnj(): ManajerUiState = ManajerUiState(
+    manajerUiEvent = toManajerUiEvent()
+)
+
+fun Manajer.toManajerUiEvent(): ManajerUiEvent = ManajerUiEvent(
+    id_manajer = id_manajer,
+    nama_manajer = nama_manajer,
+    kontak_manajer = kontak_manajer
+)
 
 data class ManajerUiState(
     val manajerUiEvent: ManajerUiEvent = ManajerUiEvent()
