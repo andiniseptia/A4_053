@@ -28,6 +28,34 @@ class DetailPemilikViewModel(
 
     private val id_pemilik: String = checkNotNull(savedStateHandle[DestinasiDetailPemilik.IDPEMILIK])
 
+    init {
+        getPemilikById()
+    }
+
+    fun getPemilikById() {
+        viewModelScope.launch {
+            detailPemilikUiState = DetailPemilikUiState.Loading
+            detailPemilikUiState = try {
+                val pemilik = pml.getPemilikById(id_pemilik)
+                DetailPemilikUiState.Success(pemilik)
+        } catch (e:Exception) {
+            DetailPemilikUiState.Error
+        } catch (e:Exception){
+            DetailPemilikUiState.Error
+        }
+        }
+    }
+
+    fun deletePemilik() {
+        viewModelScope.launch {
+            try {
+                pml.deletePemilik(id_pemilik)
+                getPemilikById()
+            } catch (e: Exception) {
+                detailPemilikUiState = DetailPemilikUiState.Error
+            }
+        }
+    }
 
     fun refreshDetailPemilik() {
         viewModelScope.launch {
