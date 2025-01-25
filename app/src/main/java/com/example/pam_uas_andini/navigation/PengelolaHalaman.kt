@@ -95,6 +95,30 @@ fun PengelolaHalaman(
             })
         }
 
+        composable(
+            DestinasiDetailPemilik.routesWithArg,
+            arguments = listOf(
+                navArgument(DestinasiDetailPemilik.IDPEMILIK) {
+                    type = NavType.StringType
+                }
+            )
+        ) { backStackEntry ->
+            val id_pemilik = backStackEntry.arguments?.getString(DestinasiDetailPemilik.IDPEMILIK)
+            DetailPemilikView(
+                onBack = {
+                    navController.popBackStack()
+                },
+                onEditClick = {
+                    id_pemilik?.let { id ->
+                        navController.navigate("${DestinasiUpdatePemilik.route}/$id") // Pass the id_pemilik here
+                    }
+                },
+                modifier = modifier,
+                onDeleteClick = {
+                    navController.popBackStack()
+                }
+            )
+        }
 
     }
 }
