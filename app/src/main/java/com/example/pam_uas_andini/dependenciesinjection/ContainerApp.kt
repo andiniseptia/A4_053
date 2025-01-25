@@ -24,3 +24,31 @@ interface ContainerApp {
     val propertiRepository: PropertiRepository
 }
 
+class PerusahaanContainer : ContainerApp {
+
+    private val json = Json{ ignoreUnknownKeys = true }
+
+    private val baseUrlPemilik = "http://10.0.2.2:3000/api/pemilik/"
+    private val retrofitPemilik: Retrofit = Retrofit.Builder()
+        .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+        .baseUrl(baseUrlPemilik).build()
+
+    private val baseUrlJenis = "http://10.0.2.2:3000/api/jenis/"
+    private val retrofitJenis: Retrofit = Retrofit.Builder()
+        .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+        .baseUrl(baseUrlJenis).build()
+
+    private val baseUrlManajer = "http://10.0.2.2:3000/api/manajer/"
+    private val retrofitManajer: Retrofit = Retrofit.Builder()
+        .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+        .baseUrl(baseUrlManajer).build()
+
+    private val baseUrlProperti = "http://10.0.2.2:3000/api/properti/"
+    private val retrofitProperti: Retrofit = Retrofit.Builder()
+        .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+        .baseUrl(baseUrlProperti).build()
+
+
+
+
+}
