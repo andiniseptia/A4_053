@@ -41,5 +41,15 @@ class HomePemilikViewModel(private val pml: PemilikRepository) : ViewModel() {
         }
     }
 
-
+    fun deletePemilik(id_pemilik: String) {
+        viewModelScope.launch {
+            try {
+                pml.deletePemilik(id_pemilik)
+            } catch (e: IOException) {
+                HomePemilikUiState.Error
+            } catch (e: HttpException) {
+                HomePemilikUiState.Error
+            }
+        }
+    }
 }
