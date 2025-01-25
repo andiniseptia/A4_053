@@ -9,6 +9,24 @@ import com.example.pam_uas_andini.model.Manajer
 import com.example.pam_uas_andini.repository.manajer.ManajerRepository
 import kotlinx.coroutines.launch
 
+class InsertManajerViewModel(private val mnj: ManajerRepository) : ViewModel() {
+    var uiState by mutableStateOf(ManajerUiState())
+        private set
+
+    fun updateInsertMnjState(manajerUiEvent: ManajerUiEvent) {
+        uiState = ManajerUiState(manajerUiEvent = manajerUiEvent)
+    }
+
+    suspend fun insertMnj() {
+        viewModelScope.launch {
+            try {
+                mnj.insertManajer(uiState.manajerUiEvent.toMnj())
+            } catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
+    }
+}
 
 fun ManajerUiEvent.toMnj(): Manajer = Manajer(
     id_manajer = id_manajer,
