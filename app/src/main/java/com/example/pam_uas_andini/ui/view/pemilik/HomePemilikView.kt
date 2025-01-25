@@ -43,6 +43,51 @@ import com.example.pam_uas_andini.ui.viewmodel.PenyediaViewModel
 import com.example.pam_uas_andini.ui.viewmodel.pemilik.HomePemilikUiState
 import com.example.pam_uas_andini.ui.viewmodel.pemilik.HomePemilikViewModel
 
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomePemilikView(
+    navigateBack: () -> Unit,
+    navigateToItemEntry: () -> Unit,
+    modifier: Modifier = Modifier,
+    onDetailClick: (String) -> Unit = {},
+    viewModel: HomePemilikViewModel = viewModel(factory = PenyediaViewModel.Factory)
+) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    Scaffold (
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiHomePemilik.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                onRefresh = {
+                    viewModel.getPemilik()
+                },
+                navigateUp = navigateBack
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = navigateToItemEntry,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(18.dp)
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Pemilik")
+            }
+        },
+    ) { innerPadding ->
+        HomeStatus(
+            homePemilikUiState = viewModel.pemilikUIState,
+            retryAction = { viewModel.getPemilik() }, modifier = Modifier.padding(innerPadding),
+            onDetailClick = onDetailClick, onDeleteClick = {
+                viewModel.deletePemilik(it.id_pemilik)
+                viewModel.getPemilik()
+            }
+        )
+    }
+}
+
 @Composable
 fun HomeStatus(
     homePemilikUiState: HomePemilikUiState,
