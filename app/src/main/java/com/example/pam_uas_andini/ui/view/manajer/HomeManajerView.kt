@@ -46,6 +46,36 @@ import com.example.pam_uas_andini.ui.viewmodel.manajer.HomeManajerUiState
 import com.example.pam_uas_andini.ui.viewmodel.manajer.HomeManajerViewModel
 import com.example.pam_uas_andini.ui.viewmodel.pemilik.HomePemilikUiState
 import com.example.pam_uas_andini.ui.viewmodel.pemilik.HomePemilikViewModel
+@Composable
+fun HomeStatus(
+    homeManajerUiState: HomeManajerUiState,
+    retryAction: () -> Unit,
+    modifier: Modifier = Modifier,
+    onDeleteClick: (Manajer) -> Unit = {},
+    onDetailClick: (String) -> Unit
+) {
+    when(homeManajerUiState) {
+        is HomeManajerUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
+
+        is HomeManajerUiState.Success ->
+            if (homeManajerUiState.manajer.isEmpty()) {
+                return Box (modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(text = "Tidak ada data manajer")
+                }
+            } else {
+                MnjLayout(
+                    manajer = homeManajerUiState.manajer, modifier = modifier.fillMaxWidth(),
+                    onDetailClick = {
+                        onDetailClick(it.id_manajer)
+                    },
+                    onDeleteClick = {
+                        onDeleteClick(it)
+                    }
+                )
+            }
+        is HomeManajerUiState.Error -> OnError(retryAction, modifier = modifier.fillMaxSize())
+    }
+}
 
 @Composable
 fun OnLoading(modifier: Modifier = Modifier) {
