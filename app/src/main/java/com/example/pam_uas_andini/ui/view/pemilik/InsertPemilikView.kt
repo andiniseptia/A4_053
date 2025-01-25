@@ -29,6 +29,32 @@ import kotlinx.coroutines.launch
 
 
 @Composable
+fun EntryBodyPemilik(
+    pemilikUiState: PemilikUiState,
+    onPemilikValueChange: (PemilikUiEvent) -> Unit,
+    onSaveClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column (
+        verticalArrangement = Arrangement.spacedBy(18.dp),
+        modifier = modifier.padding(12.dp)
+    ) {
+        FormPemilik(
+            pemilikUiEvent = pemilikUiState.pemilikUiEvent,
+            onValueChange = onPemilikValueChange,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Button(
+            onClick = onSaveClick,
+            shape = MaterialTheme.shapes.small,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "Simpan")
+        }
+    }
+}
+
+@Composable
 fun FormPemilik(
     pemilikUiEvent: PemilikUiEvent,
     modifier: Modifier = Modifier,
