@@ -48,6 +48,26 @@ import com.example.pam_uas_andini.ui.viewmodel.pemilik.DetailPemilikUiState
 import com.example.pam_uas_andini.ui.viewmodel.pemilik.DetailPemilikViewModel
 
 @Composable
+fun ItemDetailManajer(
+    modifier: Modifier = Modifier,
+    manajer: Manajer
+) {
+    Card(
+        modifier = modifier.padding(16.dp),
+        shape = MaterialTheme.shapes.medium,
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            ComponentDetailManajer(judul = "ID Manajer", isinya = manajer.id_manajer)
+            ComponentDetailManajer(judul = "Nama Manajer", isinya = manajer.nama_manajer)
+            ComponentDetailManajer(judul = "Kontak Manajer", isinya = manajer.kontak_manajer)
+        }
+    }
+}
+
+@Composable
 fun ComponentDetailManajer(
     modifier: Modifier = Modifier,
     judul: String,
