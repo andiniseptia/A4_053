@@ -63,5 +63,26 @@ fun PengelolaHalaman(
             )
         }
 
+        // PEMILIK
+        composable(DestinasiHomePemilik.route) {
+            println("Navigasi ke HomePemilikView")
+            HomePemilikView(
+                navigateToItemEntry = {
+                    navController.navigate(DestinasiInsertPemilik.route)
+                },
+                onDetailClick = { id_pemilik ->
+                    println("PengelolaHalaman: id_pemilik = $id_pemilik")
+                navController.navigate("${DestinasiDetailPemilik.route}/$id_pemilik")
+                },
+                navigateBack = {
+                    navController.navigate(DestinasiHome.route) {
+                        popUpTo(DestinasiHome.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
+        }
+
     }
 }
