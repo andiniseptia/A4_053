@@ -21,3 +21,11 @@ sealed class HomeNavigation {
     object HomeManajer : HomeNavigation()
     object HomeJenis : HomeNavigation()
 }
+
+data class HomeUiState(
+    val navigateToProperti: Boolean = false,
+    val navigateToPemilik: Boolean = false,
+    val navigateToManajer: Boolean = false,
+    val navigateToJenis: Boolean = false
+)
+
