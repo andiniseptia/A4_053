@@ -17,3 +17,29 @@ sealed class HomePemilikUiState {
     object Error: HomePemilikUiState()
     object Loading: HomePemilikUiState()
 }
+
+class HomePemilikViewModel(private val pml: PemilikRepository) : ViewModel() {
+    var pemilikUIState: HomePemilikUiState by mutableStateOf(HomePemilikUiState.Loading)
+        private set
+
+    init {
+        getPemilik()
+    }
+
+    fun getPemilik() {
+        viewModelScope.launch {
+            pemilikUIState = HomePemilikUiState.Loading
+            pemilikUIState = try {
+                HomePemilikUiState.Success(pml.getPemilik().data)
+            } catch (e: IOException) {
+                pemilikUIState = HomePemilikUiState.Error
+                HomePemilikUiState.Error
+            } catch (e: HttpException) {
+                pemilikUIState = HomePemilikUiState.Error
+                HomePemilikUiState.Error
+            }
+        }
+    }
+
+
+}
