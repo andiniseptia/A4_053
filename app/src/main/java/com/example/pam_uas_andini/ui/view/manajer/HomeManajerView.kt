@@ -46,6 +46,51 @@ import com.example.pam_uas_andini.ui.viewmodel.manajer.HomeManajerUiState
 import com.example.pam_uas_andini.ui.viewmodel.manajer.HomeManajerViewModel
 import com.example.pam_uas_andini.ui.viewmodel.pemilik.HomePemilikUiState
 import com.example.pam_uas_andini.ui.viewmodel.pemilik.HomePemilikViewModel
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomeManajerView(
+    navigateBack: () -> Unit,
+    navigateToItemEntry: () -> Unit,
+    modifier: Modifier = Modifier,
+    onDetailClick: (String) -> Unit = {},
+    viewModel: HomeManajerViewModel = viewModel(factory = PenyediaViewModel.Factory)
+) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    Scaffold (
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiHomeManajer.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                onRefresh = {
+                    viewModel.getManajer()
+                },
+                navigateUp = navigateBack
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = navigateToItemEntry,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(18.dp)
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Manajer")
+            }
+        },
+    ) { innerPadding ->
+        HomeStatus(
+            homeManajerUiState = viewModel.manajerUIState,
+            retryAction = { viewModel.getManajer() }, modifier = Modifier.padding(innerPadding),
+            onDetailClick = onDetailClick, onDeleteClick = {
+                viewModel.deleteManajer(it.id_manajer)
+                viewModel.getManajer()
+            }
+        )
+    }
+}
+
 @Composable
 fun HomeStatus(
     homeManajerUiState: HomeManajerUiState,
