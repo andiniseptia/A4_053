@@ -21,5 +21,34 @@ class HomeManajerViewModel(private val mnj: ManajerRepository) : ViewModel() {
     var manajerUIState: HomeManajerUiState by mutableStateOf(HomeManajerUiState.Loading)
         private set
 
+    init {
+        getManajer()
+    }
 
+    fun getManajer() {
+        viewModelScope.launch {
+            manajerUIState = HomeManajerUiState.Loading
+            manajerUIState = try {
+                HomeManajerUiState.Success(mnj.getManajer().data)
+            } catch (e: IOException) {
+                manajerUIState = HomeManajerUiState.Error
+                HomeManajerUiState.Error
+            } catch (e: HttpException) {
+                manajerUIState = HomeManajerUiState.Error
+                HomeManajerUiState.Error
+            }
+        }
+    }
+
+    fun deleteManajer(id_manajer: String) {
+        viewModelScope.launch {
+            try {
+                mnj.deleteManajer(id_manajer)
+            } catch (e: IOException) {
+                HomeManajerUiState.Error
+            } catch (e: HttpException) {
+                HomeManajerUiState.Error
+            }
+        }
+    }
 }
