@@ -27,6 +27,35 @@ class DetailManajerViewModel(
 
     private val id_manajer: String = checkNotNull(savedStateHandle[DestinasiDetailManajer.IDMANAJER])
 
+    init {
+        getManajerById()
+    }
+
+    fun getManajerById() {
+        viewModelScope.launch {
+            detailManajerUiState = DetailManajerUiState.Loading
+            detailManajerUiState = try {
+                val manajer = mnj.getManajerById(id_manajer)
+                DetailManajerUiState.Success(manajer)
+            } catch (e:Exception) {
+                DetailManajerUiState.Error
+            } catch (e:Exception){
+                DetailManajerUiState.Error
+            }
+        }
+    }
+
+    fun deleteManajer() {
+        viewModelScope.launch {
+            try {
+                mnj.deleteManajer(id_manajer)
+                getManajerById()
+            } catch (e: Exception) {
+                detailManajerUiState = DetailManajerUiState.Error
+            }
+        }
+    }
+
     fun refreshDetailManajer() {
         viewModelScope.launch {
             detailManajerUiState = DetailManajerUiState.Loading
