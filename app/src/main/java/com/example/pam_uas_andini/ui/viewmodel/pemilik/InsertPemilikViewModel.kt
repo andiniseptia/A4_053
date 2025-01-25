@@ -9,7 +9,24 @@ import com.example.pam_uas_andini.model.Pemilik
 import com.example.pam_uas_andini.repository.pemilik.PemilikRepository
 import kotlinx.coroutines.launch
 
+class InsertPemilikViewModel(private val pml: PemilikRepository) : ViewModel() {
+    var uiState by mutableStateOf(PemilikUiState())
+        private set
 
+    fun updateInsertPmlState(pemilikUiEvent: PemilikUiEvent) {
+        uiState = PemilikUiState(pemilikUiEvent = pemilikUiEvent)
+    }
+
+    suspend fun insertPml() {
+        viewModelScope.launch {
+            try {
+                pml.insertPemilik(uiState.pemilikUiEvent.toPml())
+            } catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
+    }
+}
 
 fun PemilikUiEvent.toPml(): Pemilik = Pemilik(
     id_pemilik = id_pemilik,
