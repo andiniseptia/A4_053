@@ -18,3 +18,26 @@ sealed class DetailPemilikUiState {
     object Error : DetailPemilikUiState()
 }
 
+class DetailPemilikViewModel(
+    savedStateHandle: SavedStateHandle,
+    private val pml: PemilikRepository
+) : ViewModel() {
+
+    var detailPemilikUiState: DetailPemilikUiState by mutableStateOf(DetailPemilikUiState.Loading)
+        private set
+
+    private val id_pemilik: String = checkNotNull(savedStateHandle[DestinasiDetailPemilik.IDPEMILIK])
+
+
+    fun refreshDetailPemilik() {
+        viewModelScope.launch {
+            detailPemilikUiState = DetailPemilikUiState.Loading
+            detailPemilikUiState = try {
+                val pemilik = pml.getPemilikById(id_pemilik)
+                DetailPemilikUiState.Success(pemilik)
+            } catch (e: Exception) {
+                DetailPemilikUiState.Error
+            }
+        }
+    }
+}
