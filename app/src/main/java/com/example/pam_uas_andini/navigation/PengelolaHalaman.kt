@@ -158,5 +158,16 @@ fun PengelolaHalaman(
             )
         }
 
+        composable(DestinasiInsertManajer.route) {
+            println("Navigasi ke InsertManajerView")
+            InsertManajerView(navigateBack = {
+                navController.navigate(DestinasiHomeManajer.route) {
+                    popUpTo(DestinasiHomeManajer.route) {
+                        inclusive = true
+                    }
+                }
+            })
+        }
+
     }
 }
