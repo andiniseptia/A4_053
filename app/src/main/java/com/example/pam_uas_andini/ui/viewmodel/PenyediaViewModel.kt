@@ -39,6 +39,29 @@ object PenyediaViewModel {
             HomeViewModel()
         }
 
+        // PEMILIK
+        initializer {
+            HomePemilikViewModel(
+                perusahaanApp().container.pemilikRepository
+            )
+        }
+        initializer {
+            InsertPemilikViewModel(
+                perusahaanApp().container.pemilikRepository
+            )
+        }
+        initializer {
+            DetailPemilikViewModel(
+                createSavedStateHandle(),
+                perusahaanApp().container.pemilikRepository
+            )
+        }
+        initializer {
+            UpdatePemilikViewModel(
+                savedStateHandle = createSavedStateHandle(),
+                perusahaanApp().container.pemilikRepository
+            )
+        }
 
     }
 }
