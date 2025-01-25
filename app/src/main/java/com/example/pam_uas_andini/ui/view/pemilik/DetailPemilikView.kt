@@ -28,6 +28,26 @@ import com.example.pam_uas_andini.ui.viewmodel.pemilik.DetailPemilikUiState
 import com.example.pam_uas_andini.ui.viewmodel.pemilik.DetailPemilikViewModel
 
 @Composable
+fun ItemDetailPemilik(
+    modifier: Modifier = Modifier,
+    pemilik: Pemilik
+) {
+    Card(
+        modifier = modifier.padding(16.dp),
+        shape = MaterialTheme.shapes.medium,
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            ComponentDetailPemilik(judul = "ID Pemilik", isinya = pemilik.id_pemilik)
+            ComponentDetailPemilik(judul = "Nama Pemilik", isinya = pemilik.nama_pemilik)
+            ComponentDetailPemilik(judul = "Kontak Pemilik", isinya = pemilik.kontak_pemilik)
+        }
+    }
+}
+
+@Composable
 fun ComponentDetailPemilik(
     modifier: Modifier = Modifier,
     judul: String,
