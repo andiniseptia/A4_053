@@ -48,6 +48,21 @@ class PerusahaanContainer : ContainerApp {
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .baseUrl(baseUrlProperti).build()
 
+    private val jenisService: JenisService by lazy {
+        retrofitJenis.create(JenisService::class.java)
+    }
+
+    private val manajerService: ManajerService by lazy {
+        retrofitManajer.create(ManajerService::class.java)
+    }
+
+    private  val pemilikService: PemilikService by lazy {
+        retrofitPemilik.create(PemilikService::class.java)
+    }
+
+    private val propertiService: PropertiService by lazy {
+        retrofitProperti.create(PropertiService::class.java)
+    }
 
 
 
