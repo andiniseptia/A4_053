@@ -29,3 +29,22 @@ data class HomeUiState(
     val navigateToJenis: Boolean = false
 )
 
+class HomeViewModel : ViewModel() {
+    private val _uiState = MutableStateFlow(HomeUiState())
+    val uiState: StateFlow<HomeUiState> = _uiState
+
+    fun navigateTo(destination: HomeNavigation) {
+        _uiState.update {
+            when (destination) {
+                HomeNavigation.HomeProperti -> it.copy(navigateToProperti = true)
+                HomeNavigation.HomePemilik -> it.copy(navigateToPemilik = true)
+                HomeNavigation.HomeManajer -> it.copy(navigateToManajer = true)
+                HomeNavigation.HomeJenis -> it.copy(navigateToJenis = true)
+            }
+        }
+    }
+
+    fun resetNavigation() {
+        _uiState.update { HomeUiState() }
+    }
+}
