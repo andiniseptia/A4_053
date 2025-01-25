@@ -39,3 +39,32 @@ object DestinasiUpdatePemilik : DestinasiNavigasi {
     const val IDPEMILIK = "id_pemilik"
     val routesWithArg = "$route/{$IDPEMILIK}"
 }
+
+// MANAJER
+object DestinasiHomeManajer : DestinasiNavigasi {
+    override val route = "homeManajer"
+    override val titleRes: String = "Home Manajer"
+    const val IDMANAJER = "id"
+    val routesWithArg = "$route/{$IDMANAJER}"
+}
+
+object DestinasiInsertManajer : DestinasiNavigasi {
+    override val route = "insertManajer"
+    override val titleRes: String = "Tambah Manajer"
+    const val IDMANAJER = "id"
+    val routesWithArg = "$route/{$IDMANAJER}"
+}
+
+object DestinasiDetailManajer : DestinasiNavigasi {
+    override val route = "detailManajer"
+    override val titleRes = "Detail Manajer"
+    const val IDMANAJER = "id_manajer"
+    val routesWithArg = "$route/{$IDMANAJER}"
+}
+
+object DestinasiUpdateManajer : DestinasiNavigasi {
+    override val route = "updateManajer"
+    override val titleRes = "Update Manajer"
+    const val IDMANAJER = "id_manajer"
+    val routesWithArg = "$route/{$IDMANAJER}"
+}
