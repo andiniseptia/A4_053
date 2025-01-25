@@ -27,6 +27,53 @@ import com.example.pam_uas_andini.ui.viewmodel.PenyediaViewModel
 import com.example.pam_uas_andini.ui.viewmodel.pemilik.DetailPemilikUiState
 import com.example.pam_uas_andini.ui.viewmodel.pemilik.DetailPemilikViewModel
 
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DetailPemilikView(
+    onBack: () -> Unit = { },
+    onEditClick: () -> Unit = { },
+    onDeleteClick: () -> Unit = { },
+    modifier: Modifier = Modifier,
+    viewModel: DetailPemilikViewModel = viewModel(factory = PenyediaViewModel.Factory)
+) {
+    LaunchedEffect(Unit) {
+        viewModel.refreshDetailPemilik() // Refresh detail saat halaman ini diluncurkan
+    }
+
+    Scaffold(
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiDetailPemilik.titleRes,
+                canNavigateBack = true,
+                //scrollBehavior = scrollBehavior,
+                navigateUp = onBack,
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = onEditClick,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(18.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "Edit Kontak"
+                )
+            }
+        }
+    ) { innerPadding ->
+        DetailStatus(
+            modifier = Modifier.padding(innerPadding),
+            detailPemilikUiState = viewModel.detailPemilikUiState,
+            onDeleteClick = {
+                viewModel.deletePemilik()
+                onBack()
+            }
+        )
+    }
+}
+
 @Composable
 fun DetailStatus(
     modifier: Modifier = Modifier,
