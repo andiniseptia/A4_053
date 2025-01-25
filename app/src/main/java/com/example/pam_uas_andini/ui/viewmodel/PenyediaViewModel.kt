@@ -63,6 +63,31 @@ object PenyediaViewModel {
             )
         }
 
+        // MANAJER
+        initializer {
+            HomeManajerViewModel(
+                perusahaanApp().container.manajerRepository
+            )
+        }
+        initializer {
+            InsertManajerViewModel(
+                perusahaanApp().container.manajerRepository
+            )
+        }
+        initializer {
+            DetailManajerViewModel(
+                createSavedStateHandle(),
+                perusahaanApp().container.manajerRepository
+            )
+        }
+        initializer {
+            UpdateManajerViewModel(
+                savedStateHandle = createSavedStateHandle(),
+                perusahaanApp().container.manajerRepository
+            )
+        }
+
+
     }
 }
 
