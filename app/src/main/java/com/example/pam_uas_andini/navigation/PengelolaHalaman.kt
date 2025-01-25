@@ -120,5 +120,22 @@ fun PengelolaHalaman(
             )
         }
 
+        composable(
+            DestinasiUpdatePemilik.routesWithArg,
+            arguments = listOf(
+                navArgument(DestinasiUpdatePemilik.IDPEMILIK) {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val id_pemilik = it.arguments?.getString(DestinasiUpdatePemilik.IDPEMILIK)
+            id_pemilik?.let { id_pemilik ->
+                UpdatePemilikView(
+                    onBack = {navController.popBackStack()},
+                    onNavigate = { navController.popBackStack() }
+                )
+            }
+        }
+
     }
 }
