@@ -84,5 +84,17 @@ fun PengelolaHalaman(
             )
         }
 
+        composable(DestinasiInsertPemilik.route) {
+            println("Navigasi ke InsertPemilikView")
+            InsertPemilikView(navigateBack = {
+                navController.navigate(DestinasiHomePemilik.route) {
+                    popUpTo(DestinasiHomePemilik.route) {
+                        inclusive = true
+                    }
+                }
+            })
+        }
+
+
     }
 }
