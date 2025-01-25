@@ -68,3 +68,33 @@ object DestinasiUpdateManajer : DestinasiNavigasi {
     const val IDMANAJER = "id_manajer"
     val routesWithArg = "$route/{$IDMANAJER}"
 }
+
+// JENIS
+object DestinasiHomeJenis : DestinasiNavigasi {
+    override val route = "homeJenis"
+    override val titleRes: String = "Home Jenis"
+    const val IDJENIS = "id_jenis"
+    val routesWithArg = "$route/{$IDJENIS}"
+}
+
+object DestinasiInsertJenis : DestinasiNavigasi {
+    override val route = "insertJenis"
+    override val titleRes: String = "Tambah Jenis"
+    const val IDJENIS = "id_jenis"
+    val routesWithArg = "$route/{$IDJENIS}"
+}
+
+object DestinasiDetailJenis : DestinasiNavigasi {
+    override val route = "detailJenis"
+    override val titleRes = "Detail Jenis"
+    const val IDJENIS = "id_jenis"
+    val routesWithArg = "$route/{$IDJENIS}"
+}
+
+object DestinasiUpdateJenis : DestinasiNavigasi {
+    override val route = "updateJenis"
+    override val titleRes = "Update Jenis"
+    const val IDJENIS = "id_jenis"
+    val routesWithArg = "$route/{$IDJENIS}"
+}
+
