@@ -9,6 +9,24 @@ import com.example.pam_uas_andini.model.Pemilik
 import com.example.pam_uas_andini.repository.pemilik.PemilikRepository
 import kotlinx.coroutines.launch
 
+
+
+fun PemilikUiEvent.toPml(): Pemilik = Pemilik(
+    id_pemilik = id_pemilik,
+    nama_pemilik = nama_pemilik,
+    kontak_pemilik = kontak_pemilik
+)
+
+fun Pemilik.toUiStatePml(): PemilikUiState = PemilikUiState(
+    pemilikUiEvent = toPemilikUiEvent()
+)
+
+fun Pemilik.toPemilikUiEvent(): PemilikUiEvent = PemilikUiEvent(
+    id_pemilik = id_pemilik,
+    nama_pemilik = nama_pemilik,
+    kontak_pemilik = kontak_pemilik
+)
+
 data class PemilikUiState(
     val pemilikUiEvent: PemilikUiEvent = PemilikUiEvent()
 )
