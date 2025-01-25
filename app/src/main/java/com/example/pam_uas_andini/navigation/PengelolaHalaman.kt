@@ -137,5 +137,26 @@ fun PengelolaHalaman(
             }
         }
 
+        // MANAJER
+        composable(DestinasiHomeManajer.route) {
+            println("Navigasi ke HomeManajerView")
+            HomeManajerView(
+                navigateToItemEntry = {
+                    navController.navigate(DestinasiInsertManajer.route)
+                },
+                onDetailClick = { id_manajer ->
+                    println("PengelolaHalaman: id_manajer = $id_manajer")
+                    navController.navigate("${DestinasiDetailManajer.route}/$id_manajer")
+                },
+                navigateBack = {
+                    navController.navigate(DestinasiHome.route) {
+                        popUpTo(DestinasiHome.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
+        }
+
     }
 }
