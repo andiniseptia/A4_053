@@ -44,6 +44,37 @@ import com.example.pam_uas_andini.ui.viewmodel.pemilik.HomePemilikUiState
 import com.example.pam_uas_andini.ui.viewmodel.pemilik.HomePemilikViewModel
 
 @Composable
+fun HomeStatus(
+    homePemilikUiState: HomePemilikUiState,
+    retryAction: () -> Unit,
+    modifier: Modifier = Modifier,
+    onDeleteClick: (Pemilik) -> Unit = {},
+    onDetailClick: (String) -> Unit
+) {
+    when(homePemilikUiState) {
+        is HomePemilikUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
+
+        is HomePemilikUiState.Success ->
+            if (homePemilikUiState.pemilik.isEmpty()) {
+                return Box (modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(text = "Tidak ada data pemilik")
+                }
+            } else {
+                PmlLayout(
+                    pemilik = homePemilikUiState.pemilik, modifier = modifier.fillMaxWidth(),
+                    onDetailClick = {
+                        onDetailClick(it.id_pemilik)
+                    },
+                    onDeleteClick = {
+                        onDeleteClick(it)
+                    }
+                )
+            }
+        is HomePemilikUiState.Error -> OnError(retryAction, modifier = modifier.fillMaxSize())
+    }
+}
+
+@Composable
 fun OnLoading(modifier: Modifier = Modifier) {
     Image(
         modifier = modifier.size(200.dp),
