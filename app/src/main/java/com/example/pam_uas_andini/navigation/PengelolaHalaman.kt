@@ -318,5 +318,15 @@ fun PengelolaHalaman(
                 }
             )
         }
+        composable(DestinasiInsertProperti.route) {
+            println("Navigasi ke InsertPropertiView")
+            InsertPropertiView(navigateBack = {
+                navController.navigate(DestinasiHomeProperti.route) {
+                    popUpTo(DestinasiHomeProperti.route) {
+                        inclusive = true
+                    }
+                }
+            })
+        }
     }
 }
