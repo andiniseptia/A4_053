@@ -10,14 +10,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pam_uas_andini.customwidget.CostumeTopAppBar
-import com.example.pam_uas_andini.navigation.DestinasiInsertPemilik
+import com.example.pam_uas_andini.navigation.DestinasiUpdatePemilik
 import com.example.pam_uas_andini.ui.viewmodel.PenyediaViewModel
 import com.example.pam_uas_andini.ui.viewmodel.pemilik.UpdatePemilikViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.reflect.Modifier
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,7 +31,7 @@ fun UpdatePemilikView(
     Scaffold (
         topBar = {
             CostumeTopAppBar(
-                title = DestinasiInsertPemilik.titleRes,
+                title = DestinasiUpdatePemilik.titleRes,
                 canNavigateBack = true,
                 scrollBehavior = scrollBehavior,
                 navigateUp = onBack
