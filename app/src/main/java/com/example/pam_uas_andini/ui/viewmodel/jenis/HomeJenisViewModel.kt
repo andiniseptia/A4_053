@@ -40,4 +40,16 @@ class HomeJenisViewModel(private val jns: JenisRepository) : ViewModel() {
         }
     }
 
+    fun getJenisById(id_jenis: String) {
+        viewModelScope.launch {
+            jenisUIState = HomeJenisUiState.Loading
+            jenisUIState = try {
+                val jenisResponse = jns.getJenisById(id_jenis)
+                HomeJenisUiState.Success(listOf(jenisResponse.data)) // Mengembalikan daftar dengan satu jenis
+            } catch (e: Exception) {
+                HomeJenisUiState.Error
+            }
+        }
+    }
+
 }
