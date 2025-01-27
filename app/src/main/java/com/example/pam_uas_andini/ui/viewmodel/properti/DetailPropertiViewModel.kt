@@ -30,6 +30,25 @@ class DetailPropertiViewModel(
 
     private val id_properti: String = checkNotNull(savedStateHandle[DestinasiDetailProperti.IDPROPERTI])
 
+    init {
+        getPropertiById()
+    }
+
+    fun getPropertiById() {
+        viewModelScope.launch {
+            detailPropertiUiState = DetailPropertiUiState.Loading
+            detailPropertiUiState = try {
+                val properti = prt.getPropertiById(id_properti)
+                DetailPropertiUiState.Success(properti)
+            } catch (e:Exception) {
+                DetailPropertiUiState.Error
+            } catch (e:Exception){
+                DetailPropertiUiState.Error
+            }
+        }
+    }
+
+
     fun refreshDetailProperti() {
         viewModelScope.launch {
             detailPropertiUiState = DetailPropertiUiState.Loading
