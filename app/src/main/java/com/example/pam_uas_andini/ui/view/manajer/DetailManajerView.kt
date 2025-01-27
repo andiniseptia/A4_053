@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -30,22 +31,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pam_uas_andini.R
 import com.example.pam_uas_andini.customwidget.CostumeTopAppBar
 import com.example.pam_uas_andini.model.Manajer
-import com.example.pam_uas_andini.model.Pemilik
 import com.example.pam_uas_andini.navigation.DestinasiDetailManajer
-import com.example.pam_uas_andini.navigation.DestinasiDetailPemilik
-import com.example.pam_uas_andini.ui.view.pemilik.ComponentDetailPemilik
-import com.example.pam_uas_andini.ui.view.pemilik.ItemDetailPemilik
 import com.example.pam_uas_andini.ui.viewmodel.PenyediaViewModel
 import com.example.pam_uas_andini.ui.viewmodel.manajer.DetailManajerUiState
 import com.example.pam_uas_andini.ui.viewmodel.manajer.DetailManajerViewModel
-import com.example.pam_uas_andini.ui.viewmodel.pemilik.DetailPemilikUiState
-import com.example.pam_uas_andini.ui.viewmodel.pemilik.DetailPemilikViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,11 +70,13 @@ fun DetailManajerView(
             FloatingActionButton(
                 onClick = onEditClick,
                 shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.padding(18.dp)
+                modifier = Modifier.padding(18.dp),
+                containerColor = colorResource(id = R.color.primary)
             ) {
                 Icon(
                     imageVector = Icons.Default.Edit,
-                    contentDescription = "Edit Kontak"
+                    contentDescription = "Edit Kontak",
+                    tint = Color.White
                 )
             }
         }
@@ -118,7 +117,10 @@ fun DetailStatus(
 
                 Button(
                     onClick = { deleteConfirmationRequired = true },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(id = R.color.primary)
+                    ),
                 ) {
                     Text(text = "Delete")
                 }
@@ -150,7 +152,10 @@ fun ItemDetailManajer(
     Card(
         modifier = modifier.padding(16.dp),
         shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = colorResource(id = R.color.carddtl)
+        )
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
@@ -174,12 +179,13 @@ fun ComponentDetailManajer(
         Text(
             text = "$judul : ",
             fontSize = 20.sp,
+            color = Color.Gray,
             fontWeight = FontWeight.Bold,
-            color = Color.Gray
-        )
+            )
         Text(
             text = isinya,
             fontSize = 20.sp,
+            color = colorResource(id = R.color.primary),
             fontWeight = FontWeight.Bold
         )
     }
