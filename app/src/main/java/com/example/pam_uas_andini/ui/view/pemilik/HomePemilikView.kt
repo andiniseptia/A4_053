@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,6 +17,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -30,7 +34,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -48,6 +54,7 @@ import com.example.pam_uas_andini.ui.viewmodel.pemilik.HomePemilikViewModel
 @Composable
 fun HomePemilikView(
     navigateBack: () -> Unit,
+    navigateToEdit: (String) -> Unit,
     navigateToItemEntry: () -> Unit,
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit = {},
@@ -71,9 +78,10 @@ fun HomePemilikView(
             FloatingActionButton(
                 onClick = navigateToItemEntry,
                 shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.padding(18.dp)
+                modifier = Modifier.padding(18.dp),
+                containerColor = colorResource(id = R.color.primary)
             ) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Pemilik")
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Pemilik", tint = Color.White)
             }
         },
     ) { innerPadding ->
@@ -83,7 +91,8 @@ fun HomePemilikView(
             onDetailClick = onDetailClick, onDeleteClick = {
                 viewModel.deletePemilik(it.id_pemilik)
                 viewModel.getPemilik()
-            }
+            },
+            onEditClick = { navigateToEdit(it.id_pemilik) }
         )
     }
 }
@@ -94,7 +103,8 @@ fun HomeStatus(
     retryAction: () -> Unit,
     modifier: Modifier = Modifier,
     onDeleteClick: (Pemilik) -> Unit = {},
-    onDetailClick: (String) -> Unit
+    onDetailClick: (String) -> Unit,
+    onEditClick: (Pemilik) -> Unit = {}
 ) {
     when(homePemilikUiState) {
         is HomePemilikUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
@@ -112,7 +122,8 @@ fun HomeStatus(
                     },
                     onDeleteClick = {
                         onDeleteClick(it)
-                    }
+                    },
+                    onEditClick = { onEditClick(it) }
                 )
             }
         is HomePemilikUiState.Error -> OnError(retryAction, modifier = modifier.fillMaxSize())
@@ -150,7 +161,8 @@ fun PmlLayout(
     pemilik: List<Pemilik>,
     modifier: Modifier = Modifier,
     onDetailClick: (Pemilik) -> Unit,
-    onDeleteClick: (Pemilik) -> Unit = {}
+    onDeleteClick: (Pemilik) -> Unit = {},
+    onEditClick: (Pemilik) -> Unit = {}
 ) {
     LazyColumn (
         modifier = modifier,
@@ -165,7 +177,8 @@ fun PmlLayout(
                     .clickable { onDetailClick(pemilik) },
                 onDeleteClick = {
                     onDeleteClick(pemilik)
-                }
+                },
+                onEditClick = { onEditClick(pemilik) }
             )
         }
     }
@@ -175,12 +188,16 @@ fun PmlLayout(
 fun PmlCard(
     pemilik: Pemilik,
     modifier: Modifier = Modifier,
-    onDeleteClick: (Pemilik) -> Unit = {}
+    onDeleteClick: (Pemilik) -> Unit = {},
+    onEditClick: (Pemilik) -> Unit = {}
 ) {
     Card(
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = colorResource(id = R.color.cardhome)
+        )
     ) {
         Column (
             modifier = Modifier.padding(16.dp),
@@ -190,24 +207,39 @@ fun PmlCard(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                Icon(imageVector = Icons.Filled.Person, contentDescription = "nama", tint = Color.White)
+                Spacer(modifier = Modifier.padding(4.dp))
                 Text(
                     text = pemilik.nama_pemilik,
                     style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    color = Color.White
                 )
+
+                IconButton(onClick = { onEditClick(pemilik) }) {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = null,
+                        tint = Color.White
+                    )
+                }
 
                 IconButton(onClick = { onDeleteClick(pemilik) }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = null,
+                        tint = Color.White
                     )
                 }
             }
 
-            Column {
+            Row() {
+                Icon(imageVector = Icons.Filled.Info, contentDescription = "nama", tint = Color.White)
+                Spacer(modifier = Modifier.padding(4.dp))
                 Text(
                     text = pemilik.id_pemilik,
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Color.White
                 )
 
             }
