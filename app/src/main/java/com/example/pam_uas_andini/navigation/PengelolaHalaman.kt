@@ -295,6 +295,28 @@ fun PengelolaHalaman(
             }
         }
 
-
+        // PROPERTI
+        composable(DestinasiHomeProperti.route) {
+            println("Navigasi ke HomePropertiView")
+            HomePropertiView(
+                navigateToItemEntry = {
+                    navController.navigate(DestinasiInsertProperti.route)
+                },
+                onDetailClick = { id_properti ->
+                    println("PengelolaHalaman: id_properti = $id_properti")
+                    navController.navigate("${DestinasiDetailProperti.route}/$id_properti")
+                },
+                navigateBack = {
+                    navController.navigate(DestinasiHome.route) {
+                        popUpTo(DestinasiHome.route) {
+                            inclusive = true
+                        }
+                    }
+                },
+                navigateToEdit = { id_properti ->
+                    navController.navigate("${DestinasiUpdateProperti.route}/$id_properti")
+                }
+            )
+        }
     }
 }
