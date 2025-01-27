@@ -328,5 +328,33 @@ fun PengelolaHalaman(
                 }
             })
         }
+
+        composable(
+            DestinasiDetailProperti.routesWithArg,
+            arguments = listOf(
+                navArgument(DestinasiDetailProperti.IDPROPERTI) {
+                    type = NavType.StringType
+                }
+            )
+        ) { backStackEntry ->
+            val id_properti = backStackEntry.arguments?.getString(DestinasiDetailProperti.IDPROPERTI)
+            DetailPropertiView(
+                onBack = {
+                    navController.popBackStack()
+                },
+                onEditClick = {
+                    id_properti?.let { id_properti ->
+                        navController.navigate("${DestinasiUpdateProperti.route}/$id_properti")
+                    }
+                },
+                modifier = modifier,
+                onDeleteClick = {
+                    navController.popBackStack()
+                },
+                onJenisClick = { id_jenis -> navController.navigate("${DestinasiHomeJenisFiltered.route}/$id_jenis")
+                },
+                navController = navController
+            )
+        }
     }
 }
