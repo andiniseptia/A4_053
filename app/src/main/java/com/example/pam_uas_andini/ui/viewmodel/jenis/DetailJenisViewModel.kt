@@ -27,6 +27,24 @@ class DetailJenisViewModel(
 
     private val id_jenis: String = checkNotNull(savedStateHandle[DestinasiDetailJenis.IDJENIS])
 
+    init {
+        getJenisById()
+    }
+
+    fun getJenisById() {
+        viewModelScope.launch {
+            detailJenisUiState = DetailJenisUiState.Loading
+            detailJenisUiState = try {
+                val jenis = jns.getJenisById(id_jenis)
+                DetailJenisUiState.Success(jenis)
+            } catch (e:Exception) {
+                DetailJenisUiState.Error
+            } catch (e:Exception){
+                DetailJenisUiState.Error
+            }
+        }
+    }
+
     fun refreshDetailJenis() {
         viewModelScope.launch {
             detailJenisUiState = DetailJenisUiState.Loading
