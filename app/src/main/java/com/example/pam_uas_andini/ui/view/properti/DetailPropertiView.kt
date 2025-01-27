@@ -49,6 +49,37 @@ import com.example.pam_uas_andini.ui.viewmodel.properti.DetailPropertiViewModel
 
 
 @Composable
+fun ItemDetailProperti(
+    modifier: Modifier = Modifier,
+    properti: Properti
+) {
+    Card(
+        modifier = modifier.padding(16.dp),
+        shape = MaterialTheme.shapes.medium,
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = colorResource(id = R.color.carddtl)
+        )
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            ComponentDetailProperti(judul = "ID Properti", isinya = properti.id_properti)
+            ComponentDetailProperti(judul = "Nama Properti", isinya = properti.nama_properti)
+            ComponentDetailProperti(judul = "Deskripsi Properti", isinya = properti.deskripsi_properti)
+            ComponentDetailProperti(judul = "Status Properti", isinya = properti.status_properti)
+            ComponentDetailProperti(judul = "Harga Properti", isinya = properti.harga)
+            ComponentDetailProperti(judul = "Lokasi Properti", isinya = properti.lokasi)
+            ComponentDetailProperti(judul = "ID Manajer", isinya = properti.id_manajer)
+            ComponentDetailProperti(judul = "ID Pemilik", isinya = properti.id_pemilik)
+            ComponentDetailProperti(judul = "ID Jenis", isinya = properti.id_jenis)
+
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+    }
+}
+
+@Composable
 fun ComponentDetailProperti(
     modifier: Modifier = Modifier,
     judul: String,
