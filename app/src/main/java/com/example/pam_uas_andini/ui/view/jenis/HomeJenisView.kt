@@ -52,7 +52,52 @@ import com.example.pam_uas_andini.ui.viewmodel.PenyediaViewModel
 import com.example.pam_uas_andini.ui.viewmodel.jenis.HomeJenisUiState
 import com.example.pam_uas_andini.ui.viewmodel.jenis.HomeJenisViewModel
 
-
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomeJenisView(
+    navigateBack: () -> Unit,
+    navigateToItemEntry: () -> Unit,
+    navigateToEdit: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    onDetailClick: (String) -> Unit = {},
+    viewModel: HomeJenisViewModel = viewModel(factory = PenyediaViewModel.Factory)
+) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    Scaffold (
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiHomeJenis.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                onRefresh = {
+                    viewModel.getJenis()
+                },
+                navigateUp = navigateBack
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = navigateToItemEntry,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(18.dp),
+                containerColor = colorResource(id = R.color.primary)
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Jenis", tint = Color.White)
+            }
+        },
+    ) { innerPadding ->
+        HomeStatus(
+            homeJenisUiState = viewModel.jenisUIState,
+            retryAction = { viewModel.getJenis() }, modifier = Modifier.padding(innerPadding),
+            onDetailClick = onDetailClick, onDeleteClick = {
+                viewModel.deleteJenis(it.id_jenis)
+                viewModel.getJenis()
+            },
+            onEditClick = { navigateToEdit(it.id_jenis) }
+        )
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
