@@ -111,6 +111,12 @@ object PenyediaViewModel {
             )
         }
 
+        //PROPERTI
+        initializer {
+            HomePropertiViewModel(
+                perusahaanApp().container.propertiRepository
+            )
+        }
     }
 }
 
