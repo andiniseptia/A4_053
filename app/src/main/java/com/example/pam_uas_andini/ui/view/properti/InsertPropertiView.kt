@@ -46,6 +46,38 @@ import kotlinx.coroutines.launch
 
 
 @Composable
+fun EntryBodyProperti(
+    propertiUiState: PropertiUiState,
+    onPropertiValueChange: (PropertiUiEvent) -> Unit,
+    onSaveClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(18.dp),
+        modifier = modifier.padding(12.dp)
+    ) {
+        FormProperti(
+            propertiUiEvent = propertiUiState.propertiUiEvent,
+            onValueChange = onPropertiValueChange,
+            listJenis = propertiUiState.listJenis,
+            listPemilik = propertiUiState.listPemilik,
+            listManajer = propertiUiState.listManajer,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Button(
+            onClick = onSaveClick,
+            shape = MaterialTheme.shapes.small,
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = colorResource(id = R.color.primary)
+            )
+        ) {
+            Text(text = "Simpan")
+        }
+    }
+}
+
+@Composable
 fun FormProperti(
     propertiUiEvent: PropertiUiEvent,
     modifier: Modifier = Modifier,
