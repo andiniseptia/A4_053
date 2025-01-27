@@ -93,6 +93,11 @@ object PenyediaViewModel {
                 perusahaanApp().container.jenisRepository
             )
         }
+        initializer {
+            InsertJenisViewModel(
+                perusahaanApp().container.jenisRepository
+            )
+        }
     }
 }
 
