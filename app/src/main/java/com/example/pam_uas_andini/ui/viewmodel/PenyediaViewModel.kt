@@ -123,6 +123,12 @@ object PenyediaViewModel {
                 perusahaanApp().container.propertiRepository
             )
         }
+        initializer {
+            InsertPropertiViewModel(
+                perusahaanApp().container.propertiRepository
+            )
+        }
+
     }
 }
 
