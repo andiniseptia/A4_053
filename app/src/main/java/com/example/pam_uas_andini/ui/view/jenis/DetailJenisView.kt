@@ -44,6 +44,28 @@ import com.example.pam_uas_andini.ui.viewmodel.PenyediaViewModel
 import com.example.pam_uas_andini.ui.viewmodel.jenis.DetailJenisUiState
 import com.example.pam_uas_andini.ui.viewmodel.jenis.DetailJenisViewModel
 
+@Composable
+fun ItemDetailJenis(
+    modifier: Modifier = Modifier,
+    jenis: Jenis
+) {
+    Card(
+        modifier = modifier.padding(16.dp),
+        shape = MaterialTheme.shapes.medium,
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = colorResource(id = R.color.carddtl)
+        )
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            ComponentDetailJenis(judul = "ID Jenis", isinya = jenis.id_jenis)
+            ComponentDetailJenis(judul = "Nama Jenis", isinya = jenis.nama_jenis)
+            ComponentDetailJenis(judul = "Deskripsi", isinya = jenis.deskripsi_jenis)
+        }
+    }
+}
 
 @Composable
 fun ComponentDetailJenis(
