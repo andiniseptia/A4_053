@@ -52,6 +52,35 @@ import com.example.pam_uas_andini.ui.viewmodel.PenyediaViewModel
 import com.example.pam_uas_andini.ui.viewmodel.jenis.HomeJenisUiState
 import com.example.pam_uas_andini.ui.viewmodel.jenis.HomeJenisViewModel
 
+
+@Composable
+fun JnsLayout(
+    jenis: List<Jenis>,
+    modifier: Modifier = Modifier,
+    onDetailClick: (Jenis) -> Unit,
+    onDeleteClick: (Jenis) -> Unit = {},
+    onEditClick: (Jenis) -> Unit = {}
+) {
+    LazyColumn (
+        modifier = modifier,
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        items(jenis) { jenis ->
+            JnsCard(
+                jenis = jenis,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onDetailClick(jenis) },
+                onDeleteClick = {
+                    onDeleteClick(jenis)
+                },
+                onEditClick = { onEditClick(jenis) }
+            )
+        }
+    }
+}
+
 @Composable
 fun JnsCard(
     jenis: Jenis,
