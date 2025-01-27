@@ -117,6 +117,12 @@ object PenyediaViewModel {
                 perusahaanApp().container.propertiRepository
             )
         }
+        initializer {
+            DetailPropertiViewModel(
+                createSavedStateHandle(),
+                perusahaanApp().container.propertiRepository
+            )
+        }
     }
 }
 
