@@ -242,5 +242,16 @@ fun PengelolaHalaman(
             )
         }
 
+        composable(DestinasiInsertJenis.route) {
+            println("Navigasi ke InsertJenisView")
+            InsertJenisView(navigateBack = {
+                navController.navigate(DestinasiHomeJenis.route) {
+                    popUpTo(DestinasiHomeJenis.route) {
+                        inclusive = true
+                    }
+                }
+            })
+        }
+
     }
 }
