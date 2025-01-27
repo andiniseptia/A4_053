@@ -278,5 +278,23 @@ fun PengelolaHalaman(
             )
         }
 
+        composable(
+            DestinasiUpdateJenis.routesWithArg,
+            arguments = listOf(
+                navArgument(DestinasiUpdateJenis.IDJENIS) {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val id_jenis = it.arguments?.getString(DestinasiUpdateJenis.IDJENIS)
+            id_jenis?.let { id_jenis ->
+                UpdateJenisView(
+                    onBack = {navController.popBackStack()},
+                    onNavigate = { navController.popBackStack() }
+                )
+            }
+        }
+
+
     }
 }
