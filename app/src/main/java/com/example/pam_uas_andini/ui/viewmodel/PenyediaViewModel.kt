@@ -104,6 +104,12 @@ object PenyediaViewModel {
                 perusahaanApp().container.jenisRepository
             )
         }
+        initializer {
+            UpdateJenisViewModel(
+                savedStateHandle = createSavedStateHandle(),
+                perusahaanApp().container.jenisRepository
+            )
+        }
 
     }
 }
