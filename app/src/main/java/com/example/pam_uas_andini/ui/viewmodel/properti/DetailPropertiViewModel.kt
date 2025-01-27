@@ -48,6 +48,16 @@ class DetailPropertiViewModel(
         }
     }
 
+    fun deleteProperti() {
+        viewModelScope.launch {
+            try {
+                prt.deleteProperti(id_properti)
+                getPropertiById()
+            } catch (e: Exception) {
+                detailPropertiUiState = DetailPropertiUiState.Error
+            }
+        }
+    }
 
     fun refreshDetailProperti() {
         viewModelScope.launch {
