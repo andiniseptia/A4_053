@@ -47,6 +47,69 @@ import com.example.pam_uas_andini.ui.viewmodel.PenyediaViewModel
 import com.example.pam_uas_andini.ui.viewmodel.properti.DetailPropertiUiState
 import com.example.pam_uas_andini.ui.viewmodel.properti.DetailPropertiViewModel
 
+@Composable
+fun DetailStatus(
+    onJenisClick: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    detailPropertiUiState: DetailPropertiUiState,
+    onDeleteClick: () -> Unit
+) {
+    val navController = rememberNavController()
+    var deleteConfirmationRequired by remember { mutableStateOf(false) }
+
+    when (detailPropertiUiState) {
+        is DetailPropertiUiState.Loading -> {
+            Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
+        }
+
+        is DetailPropertiUiState.Success -> {
+            // Access the Pemilik object from the data property
+            val properti = detailPropertiUiState.properti.data
+            Column(modifier = modifier.padding(16.dp)) {
+                ItemDetailProperti(properti = properti)
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Button(
+                    onClick = { onJenisClick(properti.id_jenis) }, // Panggil fungsi onJenisClick dengan ID jenis
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(id = R.color.primary)
+                    )
+                ) {
+                    Text(text = "Lihat Jenis")
+                }
+
+                Button(
+                    onClick = { deleteConfirmationRequired = true },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(id = R.color.primary)
+                    )
+                ) {
+                    Text(text = "Delete")
+                }
+
+                if (deleteConfirmationRequired) {
+                    DeleteConfirmationDialog(
+                        onDeleteConfirm = {
+                            deleteConfirmationRequired = false
+                            onDeleteClick()
+                        },
+                        onDeleteCancel = { deleteConfirmationRequired = false }
+                    )
+                }
+            }
+        }
+        is DetailPropertiUiState.Error -> {
+            Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text("Error loading data")
+            }
+        }
+    }
+}
 
 @Composable
 fun ItemDetailProperti(
