@@ -43,4 +43,15 @@ class HomePropertiViewModel(private val prt: PropertiRepository) : ViewModel() {
         }
     }
 
+    fun deleteProperti(id_properti: String) {
+        viewModelScope.launch {
+            try {
+                prt.deleteProperti(id_properti)
+            } catch (e: java.io.IOException) {
+                HomePropertiUiState.Error
+            } catch (e: HttpException) {
+                HomePropertiUiState.Error
+            }
+        }
+    }
 }
