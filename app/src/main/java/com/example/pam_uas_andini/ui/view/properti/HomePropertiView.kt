@@ -51,6 +51,52 @@ import com.example.pam_uas_andini.ui.viewmodel.PenyediaViewModel
 import com.example.pam_uas_andini.ui.viewmodel.properti.HomePropertiUiState
 import com.example.pam_uas_andini.ui.viewmodel.properti.HomePropertiViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomePropertiView(
+    navigateBack: () -> Unit,
+    navigateToItemEntry: () -> Unit,
+    navigateToEdit: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    onDetailClick: (String) -> Unit = {},
+    viewModel: HomePropertiViewModel = viewModel(factory = PenyediaViewModel.Factory)
+) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    Scaffold (
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiHomeProperti.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                onRefresh = {
+                    viewModel.getProperti()
+                },
+                navigateUp = navigateBack
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = navigateToItemEntry,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(18.dp),
+                containerColor = colorResource(id = R.color.primary)
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Properti", tint = Color.White)
+            }
+        },
+    ) { innerPadding ->
+        HomeStatus(
+            homePropertiUiState = viewModel.propertiUIState,
+            retryAction = { viewModel.getProperti() }, modifier = Modifier.padding(innerPadding),
+            onDetailClick = onDetailClick, onDeleteClick = {
+                viewModel.deleteProperti(it.id_properti)
+                viewModel.getProperti()
+            },
+            onEditClick = { navigateToEdit(it.id_properti) }
+        )
+    }
+}
 
 @Composable
 fun HomeStatus(
