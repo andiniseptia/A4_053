@@ -11,6 +11,22 @@ import kotlinx.coroutines.launch
 
 
 
+fun JenisUiEvent.toJns(): Jenis = Jenis(
+    id_jenis = id_jenis,
+    nama_jenis = nama_jenis,
+    deskripsi_jenis = deskripsi_jenis
+)
+
+fun Jenis.toUiStateJns(): JenisUiState = JenisUiState(
+    jenisUiEvent = toJenisUiEvent()
+)
+
+fun Jenis.toJenisUiEvent(): JenisUiEvent = JenisUiEvent(
+    id_jenis = id_jenis,
+    nama_jenis = nama_jenis,
+    deskripsi_jenis = deskripsi_jenis
+)
+
 data class JenisUiState(
     val jenisUiEvent: JenisUiEvent = JenisUiEvent()
 )
