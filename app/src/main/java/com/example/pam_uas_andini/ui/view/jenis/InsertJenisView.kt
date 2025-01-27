@@ -30,6 +30,36 @@ import com.example.pam_uas_andini.ui.viewmodel.jenis.JenisUiEvent
 import com.example.pam_uas_andini.ui.viewmodel.jenis.JenisUiState
 import kotlinx.coroutines.launch
 
+
+@Composable
+fun EntryBodyJenis(
+    jenisUiState: JenisUiState,
+    onJenisValueChange: (JenisUiEvent) -> Unit,
+    onSaveClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column (
+        verticalArrangement = Arrangement.spacedBy(18.dp),
+        modifier = modifier.padding(12.dp)
+    ) {
+        FormJenis(
+            jenisUiEvent = jenisUiState.jenisUiEvent,
+            onValueChange = onJenisValueChange,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Button(
+            onClick = onSaveClick,
+            shape = MaterialTheme.shapes.small,
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = colorResource(id = R.color.primary)
+            )
+        ) {
+            Text(text = "Simpan")
+        }
+    }
+}
+
 @Composable
 fun FormJenis(
     jenisUiEvent: JenisUiEvent,
