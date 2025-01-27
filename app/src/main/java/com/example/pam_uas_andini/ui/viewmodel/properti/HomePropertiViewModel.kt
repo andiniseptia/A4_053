@@ -24,4 +24,23 @@ class HomePropertiViewModel(private val prt: PropertiRepository) : ViewModel() {
     var propertiUIState: HomePropertiUiState by mutableStateOf(HomePropertiUiState.Loading)
         private set
 
+    init {
+        getProperti()
+    }
+
+    fun getProperti() {
+        viewModelScope.launch {
+            propertiUIState = HomePropertiUiState.Loading
+            propertiUIState = try {
+                HomePropertiUiState.Success(prt.getProperti().data)
+            } catch (e: java.io.IOException) {
+                propertiUIState = HomePropertiUiState.Error
+                HomePropertiUiState.Error
+            } catch (e: HttpException) {
+                propertiUIState = HomePropertiUiState.Error
+                HomePropertiUiState.Error
+            }
+        }
+    }
+
 }
