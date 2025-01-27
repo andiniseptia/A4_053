@@ -47,6 +47,48 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+fun DropdownJenis(
+    selectedJenis: String,
+    onJenisSelected: (String) -> Unit,
+    listJenis: List<Jenis>
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = !expanded }
+    ) {
+        OutlinedTextField(
+            value = selectedJenis,
+            onValueChange = { },
+            label = { Text("Pilih Jenis Properti") },
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+            },
+            readOnly = true,
+            modifier = Modifier
+                .fillMaxWidth()
+                .menuAnchor()
+        )
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            listJenis.forEach { jenis ->
+                DropdownMenuItem(
+                    onClick = {
+                        onJenisSelected(jenis.id_jenis) // Memperbarui state di ViewModel
+                        expanded = false
+                    },
+                    text = { Text(jenis.nama_jenis ?: "Jenis Tidak Diketahui") }
+                )
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
 fun DropdownPemilik(
     selectedPemilik: String,
     onPemilikSelected: (String) -> Unit,
