@@ -44,6 +44,53 @@ import com.example.pam_uas_andini.ui.viewmodel.PenyediaViewModel
 import com.example.pam_uas_andini.ui.viewmodel.jenis.DetailJenisUiState
 import com.example.pam_uas_andini.ui.viewmodel.jenis.DetailJenisViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DetailJenisView(
+    onBack: () -> Unit = { },
+    onEditClick: () -> Unit = { },
+    onDeleteClick: () -> Unit = { },
+    modifier: Modifier = Modifier,
+    viewModel: DetailJenisViewModel = viewModel(factory = PenyediaViewModel.Factory)
+) {
+    LaunchedEffect(Unit) {
+        viewModel.refreshDetailJenis() // Refresh detail saat halaman ini diluncurkan
+    }
+
+    Scaffold(
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiDetailJenis.titleRes,
+                canNavigateBack = true,
+                //scrollBehavior = scrollBehavior,
+                navigateUp = onBack,
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = onEditClick,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(18.dp),
+                containerColor = colorResource(id = R.color.primary)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "Edit Kontak",
+                    tint = Color.White
+                )
+            }
+        }
+    ) { innerPadding ->
+        DetailStatus(
+            modifier = Modifier.padding(innerPadding),
+            detailJenisUiState = viewModel.detailJenisUiState,
+            onDeleteClick = {
+                viewModel.deleteJenis()
+                onBack()
+            }
+        )
+    }
+}
 
 @Composable
 fun DetailStatus(
