@@ -53,6 +53,39 @@ import com.example.pam_uas_andini.ui.viewmodel.properti.HomePropertiViewModel
 
 
 @Composable
+fun HomeStatus(
+    homePropertiUiState: HomePropertiUiState,
+    retryAction: () -> Unit,
+    modifier: Modifier = Modifier,
+    onDeleteClick: (Properti) -> Unit = {},
+    onDetailClick: (String) -> Unit,
+    onEditClick: (Properti) -> Unit = {}
+) {
+    when(homePropertiUiState) {
+        is HomePropertiUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
+
+        is HomePropertiUiState.Success ->
+            if (homePropertiUiState.properti.isEmpty()) {
+                return Box (modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(text = "Tidak ada data properti")
+                }
+            } else {
+                PrtLayout(
+                    properti = homePropertiUiState.properti, modifier = modifier.fillMaxWidth(),
+                    onDetailClick = {
+                        onDetailClick(it.id_properti)
+                    },
+                    onDeleteClick = {
+                        onDeleteClick(it)
+                    },
+                    onEditClick = { onEditClick(it) }
+                )
+            }
+        is HomePropertiUiState.Error -> OnError(retryAction, modifier = modifier.fillMaxSize())
+    }
+}
+
+@Composable
 fun OnLoading(modifier: Modifier = Modifier) {
     Image(
         modifier = modifier.size(200.dp),
