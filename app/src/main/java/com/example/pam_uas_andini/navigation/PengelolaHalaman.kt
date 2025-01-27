@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.pam_uas_andini.ui.view.HomeView
 import com.example.pam_uas_andini.ui.view.jenis.DetailJenisView
+import com.example.pam_uas_andini.ui.view.jenis.HomeJenisFilteredView
 import com.example.pam_uas_andini.ui.view.jenis.HomeJenisView
 import com.example.pam_uas_andini.ui.view.jenis.InsertJenisView
 import com.example.pam_uas_andini.ui.view.jenis.UpdateJenisView
@@ -80,6 +81,9 @@ fun PengelolaHalaman(
                             inclusive = true
                         }
                     }
+                },
+                navigateToEdit = { id_pemilik ->
+                    navController.navigate("${DestinasiUpdatePemilik.route}/$id_pemilik")
                 }
             )
         }
@@ -154,6 +158,9 @@ fun PengelolaHalaman(
                             inclusive = true
                         }
                     }
+                },
+                navigateToEdit = { id_manajer ->
+                    navController.navigate("${DestinasiUpdateManajer.route}/$id_manajer")
                 }
             )
         }
@@ -209,6 +216,30 @@ fun PengelolaHalaman(
                     onNavigate = { navController.popBackStack() }
                 )
             }
+        }
+
+        // JENIS
+        composable(DestinasiHomeJenis.route) {
+            println("Navigasi ke HomeJenisView")
+            HomeJenisView(
+                navigateToItemEntry = {
+                    navController.navigate(DestinasiInsertJenis.route)
+                },
+                onDetailClick = { id_jenis ->
+                    println("PengelolaHalaman: id_jenis = $id_jenis")
+                    navController.navigate("${DestinasiDetailJenis.route}/$id_jenis")
+                },
+                navigateBack = {
+                    navController.navigate(DestinasiHome.route) {
+                        popUpTo(DestinasiHome.route) {
+                            inclusive = true
+                        }
+                    }
+                },
+                navigateToEdit = { id_jenis ->
+                    navController.navigate("${DestinasiUpdateJenis.route}/$id_jenis")
+                }
+            )
         }
 
     }
