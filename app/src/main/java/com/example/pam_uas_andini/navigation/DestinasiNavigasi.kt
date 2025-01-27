@@ -68,3 +68,61 @@ object DestinasiUpdateManajer : DestinasiNavigasi {
     const val IDMANAJER = "id_manajer"
     val routesWithArg = "$route/{$IDMANAJER}"
 }
+
+// JENIS
+object DestinasiHomeJenis : DestinasiNavigasi {
+    override val route = "homeJenis"
+    override val titleRes: String = "Daftar Jenis Properti"
+    const val IDJENIS = "id_jenis"
+    val routesWithArg = "$route/{$IDJENIS}"
+}
+
+object DestinasiInsertJenis : DestinasiNavigasi {
+    override val route = "insertJenis"
+    override val titleRes: String = "Tambah Jenis"
+    const val IDJENIS = "id_jenis"
+    val routesWithArg = "$route/{$IDJENIS}"
+}
+
+object DestinasiDetailJenis : DestinasiNavigasi {
+    override val route = "detailJenis"
+    override val titleRes = "Detail Jenis"
+    const val IDJENIS = "id_jenis"
+    val routesWithArg = "$route/{$IDJENIS}"
+}
+
+object DestinasiUpdateJenis : DestinasiNavigasi {
+    override val route = "updateJenis"
+    override val titleRes = "Update Jenis"
+    const val IDJENIS = "id_jenis"
+    val routesWithArg = "$route/{$IDJENIS}"
+}
+
+// PROPERTI
+object DestinasiHomeProperti : DestinasiNavigasi {
+    override val route = "homeProperti"
+    override val titleRes: String = "Daftar Properti"
+    const val IDPROPERTI = "id_properti"
+    val routesWithArg = "$route/{$IDPROPERTI}"
+}
+
+object DestinasiInsertProperti : DestinasiNavigasi {
+    override val route = "insertProperti"
+    override val titleRes: String = "Tambah Properti"
+    const val IDPROPERTI = "id_properti"
+    val routesWithArg = "$route/{$IDPROPERTI}"
+}
+
+object DestinasiDetailProperti : DestinasiNavigasi {
+    override val route = "detailPropertis"
+    override val titleRes = "Detail Properti"
+    const val IDPROPERTI = "id_properti"
+    val routesWithArg = "$route/{$IDPROPERTI}"
+}
+
+object DestinasiUpdateProperti : DestinasiNavigasi {
+    override val route = "updateProperti"
+    override val titleRes = "Update Properti"
+    const val IDPROPERTI = "id_properti"
+    val routesWithArg = "$route/{$IDPROPERTI}"
+}
