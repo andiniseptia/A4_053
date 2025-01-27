@@ -52,6 +52,57 @@ import com.example.pam_uas_andini.ui.viewmodel.PenyediaViewModel
 import com.example.pam_uas_andini.ui.viewmodel.jenis.HomeJenisUiState
 import com.example.pam_uas_andini.ui.viewmodel.jenis.HomeJenisViewModel
 
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomeJenisFilteredView(
+    id_jenis: String,
+    modifier: Modifier = Modifier,
+    navigateToDetail: (String) -> Unit,
+    navigateBack: () -> Unit,
+    navController: NavController,
+    viewModel: HomeJenisViewModel = viewModel(factory = PenyediaViewModel.Factory)
+) {
+    LaunchedEffect(id_jenis) {
+        viewModel.getJenisById(id_jenis) // Ambil jenis berdasarkan ID
+    }
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    Scaffold(
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiHomeJenis.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                navigateUp = navigateBack
+            )
+        }
+    ) { innerPadding ->
+        when (val state = viewModel.jenisUIState) {
+            is HomeJenisUiState.Loading -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            }
+            is HomeJenisUiState.Success -> {
+                // Gunakan JnsLayout untuk menampilkan jenis dalam bentuk kartu
+                JnsLayout(
+                    jenis = state.jenis,
+                    modifier = Modifier.padding(innerPadding),
+                    onDetailClick = { navigateToDetail(it.id_jenis) },
+                    onDeleteClick = { /* Implementasi penghapusan jika diperlukan */ }
+                )
+            }
+            is HomeJenisUiState.Error -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text("Error loading data")
+                }
+            }
+        }
+    }
+}
+
 @Composable
 fun HomeStatus(
     homeJenisUiState: HomeJenisUiState,
