@@ -14,6 +14,34 @@ import com.example.pam_uas_andini.repository.properti.PropertiRepository
 import kotlinx.coroutines.launch
 
 
+fun PropertiUiEvent.toPrt(): Properti = Properti(
+    id_properti = id_properti,
+    nama_properti = nama_properti,
+    deskripsi_properti = deskripsi_properti,
+    lokasi = lokasi,
+    harga = harga,
+    status_properti = status_properti,
+    id_jenis = id_jenis,
+    id_pemilik = id_pemilik,
+    id_manajer = id_manajer
+)
+
+fun Properti.toUiStatePrt(): PropertiUiState = PropertiUiState(
+    propertiUiEvent = toPropertiUiEvent()
+)
+
+fun Properti.toPropertiUiEvent(): PropertiUiEvent = PropertiUiEvent (
+    id_properti = id_properti,
+    nama_properti = nama_properti,
+    deskripsi_properti = deskripsi_properti,
+    lokasi = lokasi,
+    harga = harga,
+    status_properti = status_properti,
+    id_jenis = id_jenis,
+    id_pemilik = id_pemilik,
+    id_manajer = id_manajer
+)
+
 data class PropertiUiState(
     val propertiUiEvent: PropertiUiEvent = PropertiUiEvent(),
     val listJenis: List<Jenis> = emptyList(),
