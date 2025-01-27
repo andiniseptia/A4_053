@@ -45,6 +45,17 @@ class DetailJenisViewModel(
         }
     }
 
+    fun deleteJenis() {
+        viewModelScope.launch {
+            try {
+                jns.deleteJenis(id_jenis)
+                getJenisById()
+            } catch (e: Exception) {
+                detailJenisUiState = DetailJenisUiState.Error
+            }
+        }
+    }
+
     fun refreshDetailJenis() {
         viewModelScope.launch {
             detailJenisUiState = DetailJenisUiState.Loading
