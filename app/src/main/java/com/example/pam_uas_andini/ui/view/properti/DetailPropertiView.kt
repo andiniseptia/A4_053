@@ -47,6 +47,59 @@ import com.example.pam_uas_andini.ui.viewmodel.PenyediaViewModel
 import com.example.pam_uas_andini.ui.viewmodel.properti.DetailPropertiUiState
 import com.example.pam_uas_andini.ui.viewmodel.properti.DetailPropertiViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DetailPropertiView(
+    onJenisClick: (String) -> Unit,
+    onBack: () -> Unit = { },
+    onEditClick: () -> Unit = { },
+    onDeleteClick: () -> Unit = { },
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    viewModel: DetailPropertiViewModel = viewModel(factory = PenyediaViewModel.Factory)
+) {
+    LaunchedEffect(Unit) {
+        viewModel.refreshDetailProperti() // Refresh detail saat halaman ini diluncurkan
+    }
+
+    Scaffold(
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiDetailProperti.titleRes,
+                canNavigateBack = true,
+                //scrollBehavior = scrollBehavior,
+                navigateUp = onBack,
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = onEditClick,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(18.dp),
+                containerColor = colorResource(id = R.color.primary)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "Edit Kontak",
+                    tint = Color.White
+                )
+            }
+        }
+    ) { innerPadding ->
+        DetailStatus(
+            modifier = Modifier.padding(innerPadding),
+            detailPropertiUiState = viewModel.detailPropertiUiState,
+            onDeleteClick = {
+                viewModel.deleteProperti()
+                onBack()
+            },
+            onJenisClick = { id_jenis ->
+                // Navigasi ke tampilan daftar jenis yang difilter berdasarkan ID jenis
+                navController.navigate("${DestinasiHomeJenisFiltered.route}/$id_jenis") }
+        )
+    }
+}
+
 @Composable
 fun DetailStatus(
     onJenisClick: (String) -> Unit,
