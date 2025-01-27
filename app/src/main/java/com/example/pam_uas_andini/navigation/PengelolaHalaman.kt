@@ -356,5 +356,26 @@ fun PengelolaHalaman(
                 navController = navController
             )
         }
+
+        composable(
+            DestinasiHomeJenisFiltered.routesWithArg,
+            arguments = listOf(
+                navArgument(DestinasiHomeJenisFiltered.IDJENIS) {
+                    type = NavType.StringType
+                }
+            )
+        ) { backStackEntry ->
+            val id_jenis = backStackEntry.arguments?.getString(DestinasiHomeJenisFiltered.IDJENIS)
+            HomeJenisFilteredView(
+                id_jenis = id_jenis ?: return@composable,
+                navigateToDetail = { id_jenis_detail ->
+                    navController.navigate("${DestinasiDetailJenis.route}/$id_jenis_detail")
+                },
+                navigateBack = {
+                    navController.popBackStack()
+                },
+                navController = navController
+            )
+        }
     }
 }
