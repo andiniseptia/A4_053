@@ -51,6 +51,36 @@ import com.example.pam_uas_andini.ui.viewmodel.PenyediaViewModel
 import com.example.pam_uas_andini.ui.viewmodel.properti.HomePropertiUiState
 import com.example.pam_uas_andini.ui.viewmodel.properti.HomePropertiViewModel
 
+
+@Composable
+fun PrtLayout(
+    properti: List<Properti>,
+    modifier: Modifier = Modifier,
+    onDetailClick: (Properti) -> Unit,
+    onDeleteClick: (Properti) -> Unit = {},
+    onEditClick: (Properti) -> Unit = {}
+
+) {
+    LazyColumn (
+        modifier = modifier,
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        items(properti) { properti ->
+            PrtCard(
+                properti = properti,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onDetailClick(properti) },
+                onDeleteClick = {
+                    onDeleteClick(properti)
+                },
+                onEditClick = { onEditClick(properti) }
+            )
+        }
+    }
+}
+
 @Composable
 fun PrtCard(
     properti: Properti,
