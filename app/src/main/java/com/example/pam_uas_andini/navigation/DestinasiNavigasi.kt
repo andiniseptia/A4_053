@@ -126,3 +126,11 @@ object DestinasiUpdateProperti : DestinasiNavigasi {
     const val IDPROPERTI = "id_properti"
     val routesWithArg = "$route/{$IDPROPERTI}"
 }
+
+// JENIS FILTERED
+object DestinasiHomeJenisFiltered : DestinasiNavigasi {
+    override val route = "homeJenisFiltered"
+    override val titleRes: String = "Daftar Jenis"
+    const val IDJENIS = "id_jenis"
+    val routesWithArg = "$route/{$IDJENIS}"
+}
