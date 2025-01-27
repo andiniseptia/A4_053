@@ -13,6 +13,42 @@ import com.example.pam_uas_andini.model.Properti
 import com.example.pam_uas_andini.repository.properti.PropertiRepository
 import kotlinx.coroutines.launch
 
+class InsertPropertiViewModel (private val prt: PropertiRepository) : ViewModel() {
+    var uiState by mutableStateOf(PropertiUiState())
+        private set
+
+    init {
+        viewModelScope.launch {
+            loadDropdownData()
+        }
+    }
+
+    private suspend fun loadDropdownData() {
+        val jenisResponse = prt.getJenis()
+        val pemilikResponse = prt.getPemilik()
+        val manajerResponse = prt.getManajer()
+
+        uiState = uiState.copy(
+            listJenis = jenisResponse.data,
+            listPemilik = pemilikResponse.data,
+            listManajer = manajerResponse.data
+        )
+    }
+
+    fun updateInsertPrtState(propertiUiEvent: PropertiUiEvent) {
+        uiState = uiState.copy(propertiUiEvent = propertiUiEvent)
+    }
+
+    suspend fun insertPrt() {
+        viewModelScope.launch {
+            try {
+                prt.insertProperti(uiState.propertiUiEvent.toPrt())
+            } catch (e:Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+}
 
 fun PropertiUiEvent.toPrt(): Properti = Properti(
     id_properti = id_properti,
