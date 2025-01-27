@@ -52,4 +52,15 @@ class HomeJenisViewModel(private val jns: JenisRepository) : ViewModel() {
         }
     }
 
+    fun deleteJenis(id_jenis: String) {
+        viewModelScope.launch {
+            try {
+                jns.deleteJenis(id_jenis)
+            } catch (e: IOException) {
+                HomeJenisUiState.Error
+            } catch (e: HttpException) {
+                HomeJenisUiState.Error
+            }
+        }
+    }
 }
