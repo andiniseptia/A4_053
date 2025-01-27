@@ -377,5 +377,22 @@ fun PengelolaHalaman(
                 navController = navController
             )
         }
+
+        composable(
+            DestinasiUpdateProperti.routesWithArg,
+            arguments = listOf(
+                navArgument(DestinasiUpdateProperti.IDPROPERTI) {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val id_properti = it.arguments?.getString(DestinasiUpdateProperti.IDPROPERTI)
+            id_properti?.let { id_properti ->
+                UpdatePropertiView(
+                    onBack = {navController.popBackStack()},
+                    onNavigate = { navController.popBackStack() }
+                )
+            }
+        }
     }
 }
