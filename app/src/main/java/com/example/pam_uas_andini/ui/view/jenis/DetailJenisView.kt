@@ -44,6 +44,58 @@ import com.example.pam_uas_andini.ui.viewmodel.PenyediaViewModel
 import com.example.pam_uas_andini.ui.viewmodel.jenis.DetailJenisUiState
 import com.example.pam_uas_andini.ui.viewmodel.jenis.DetailJenisViewModel
 
+
+@Composable
+fun DetailStatus(
+    modifier: Modifier = Modifier,
+    detailJenisUiState: DetailJenisUiState,
+    onDeleteClick: () -> Unit
+) {
+    var deleteConfirmationRequired by remember { mutableStateOf(false) }
+
+    when (detailJenisUiState) {
+        is DetailJenisUiState.Loading -> {
+            Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
+        }
+
+        is DetailJenisUiState.Success -> {
+            val jenis = detailJenisUiState.jenis.data
+            Column(modifier = modifier.padding(16.dp)) {
+                ItemDetailJenis(jenis = jenis)
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Button(
+                    onClick = { deleteConfirmationRequired = true },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(id = R.color.primary)
+                    )
+                ) {
+                    Text(text = "Delete")
+                }
+
+                if (deleteConfirmationRequired) {
+                    DeleteConfirmationDialog(
+                        onDeleteConfirm = {
+                            deleteConfirmationRequired = false
+                            onDeleteClick()
+                        },
+                        onDeleteCancel = { deleteConfirmationRequired = false }
+                    )
+                }
+            }
+        }
+        is DetailJenisUiState.Error -> {
+            Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text("Error loading data")
+            }
+        }
+    }
+}
+
 @Composable
 fun ItemDetailJenis(
     modifier: Modifier = Modifier,
