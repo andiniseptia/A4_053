@@ -47,6 +47,31 @@ import com.example.pam_uas_andini.ui.viewmodel.PenyediaViewModel
 import com.example.pam_uas_andini.ui.viewmodel.properti.DetailPropertiUiState
 import com.example.pam_uas_andini.ui.viewmodel.properti.DetailPropertiViewModel
 
+
+@Composable
+fun ComponentDetailProperti(
+    modifier: Modifier = Modifier,
+    judul: String,
+    isinya: String,
+) {
+    Column(modifier = modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.Start
+    ) {
+        Text(
+            text = "$judul : ",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Gray
+        )
+        Text(
+            text = isinya,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = colorResource(id = R.color.primary),
+        )
+    }
+}
+
 @Composable
 private fun DeleteConfirmationDialog(
     onDeleteConfirm: () -> Unit, onDeleteCancel: () -> Unit, modifier: Modifier = Modifier
