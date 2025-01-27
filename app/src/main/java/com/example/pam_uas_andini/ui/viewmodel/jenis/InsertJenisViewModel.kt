@@ -9,7 +9,24 @@ import com.example.pam_uas_andini.model.Jenis
 import com.example.pam_uas_andini.repository.jenis.JenisRepository
 import kotlinx.coroutines.launch
 
+class InsertJenisViewModel(private val jns: JenisRepository) : ViewModel() {
+    var uiState by mutableStateOf(JenisUiState())
+        private set
 
+    fun updateInsertJnsState(jenisUiEvent: JenisUiEvent) {
+        uiState = JenisUiState(jenisUiEvent = jenisUiEvent)
+    }
+
+    suspend fun insertJns() {
+        viewModelScope.launch {
+            try {
+                jns.insertJenis(uiState.jenisUiEvent.toJns())
+            } catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
+    }
+}
 
 fun JenisUiEvent.toJns(): Jenis = Jenis(
     id_jenis = id_jenis,
