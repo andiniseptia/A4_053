@@ -53,6 +53,39 @@ import com.example.pam_uas_andini.ui.viewmodel.jenis.HomeJenisUiState
 import com.example.pam_uas_andini.ui.viewmodel.jenis.HomeJenisViewModel
 
 @Composable
+fun HomeStatus(
+    homeJenisUiState: HomeJenisUiState,
+    retryAction: () -> Unit,
+    modifier: Modifier = Modifier,
+    onDeleteClick: (Jenis) -> Unit = {},
+    onDetailClick: (String) -> Unit,
+    onEditClick: (Jenis) -> Unit = {}
+) {
+    when(homeJenisUiState) {
+        is HomeJenisUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
+
+        is HomeJenisUiState.Success ->
+            if (homeJenisUiState.jenis.isEmpty()) {
+                return Box (modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(text = "Tidak ada data jenis")
+                }
+            } else {
+                JnsLayout(
+                    jenis = homeJenisUiState.jenis, modifier = modifier.fillMaxWidth(),
+                    onDetailClick = {
+                        onDetailClick(it.id_jenis)
+                    },
+                    onDeleteClick = {
+                        onDeleteClick(it)
+                    },
+                    onEditClick = { onEditClick(it) }
+                )
+            }
+        is HomeJenisUiState.Error -> OnError(retryAction, modifier = modifier.fillMaxSize())
+    }
+}
+
+@Composable
 fun OnLoading(modifier: Modifier = Modifier) {
     Image(
         modifier = modifier.size(200.dp),
