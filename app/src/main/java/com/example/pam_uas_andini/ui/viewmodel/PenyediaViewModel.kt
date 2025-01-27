@@ -87,7 +87,12 @@ object PenyediaViewModel {
             )
         }
 
-
+        // JENIS
+        initializer {
+            HomeJenisViewModel(
+                perusahaanApp().container.jenisRepository
+            )
+        }
     }
 }
 
