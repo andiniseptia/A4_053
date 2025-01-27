@@ -44,6 +44,48 @@ import com.example.pam_uas_andini.ui.viewmodel.properti.PropertiUiEvent
 import com.example.pam_uas_andini.ui.viewmodel.properti.PropertiUiState
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DropdownManajer(
+    selectedManajer: String,
+    onManajerSelected: (String) -> Unit,
+    listManajer: List<Manajer>
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = !expanded }
+    ) {
+        OutlinedTextField(
+            value = selectedManajer,
+            onValueChange = { /* Tidak diperlukan untuk dropdown readonly */ },
+            label = { Text("Pilih Manajer Properti") },
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+            },
+            readOnly = true,
+            modifier = Modifier
+                .fillMaxWidth()
+                .menuAnchor()
+        )
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            listManajer.forEach { manajer ->
+                DropdownMenuItem(
+                    onClick = {
+                        onManajerSelected(manajer.id_manajer) // Memperbarui state di ViewModel
+                        expanded = false
+                    },
+                    text = { Text(manajer.nama_manajer ?: "Manajer Tidak Diketahui") }
+                )
+            }
+        }
+    }
+}
+
 @Composable
 fun StatusRadioGroup(
     selectedStatus: String,
