@@ -30,6 +30,43 @@ import com.example.pam_uas_andini.ui.viewmodel.jenis.JenisUiEvent
 import com.example.pam_uas_andini.ui.viewmodel.jenis.JenisUiState
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun InsertJenisView(
+    navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: InsertJenisViewModel = viewModel(factory = PenyediaViewModel.Factory)
+) {
+    val coroutineScope = rememberCoroutineScope()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
+    Scaffold (
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiInsertJenis.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                navigateUp = navigateBack
+            )
+        }
+    ) { innerPadding ->
+        EntryBodyJenis(
+            jenisUiState = viewModel.uiState,
+            onJenisValueChange = viewModel::updateInsertJnsState,
+            onSaveClick = {
+                coroutineScope.launch {
+                    viewModel.insertJns()
+                    navigateBack()
+                }
+            },
+            modifier = Modifier
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+                .fillMaxWidth()
+        )
+    }
+}
 
 @Composable
 fun EntryBodyJenis(
