@@ -44,6 +44,49 @@ import com.example.pam_uas_andini.ui.viewmodel.properti.PropertiUiEvent
 import com.example.pam_uas_andini.ui.viewmodel.properti.PropertiUiState
 import kotlinx.coroutines.launch
 
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DropdownPemilik(
+    selectedPemilik: String,
+    onPemilikSelected: (String) -> Unit,
+    listPemilik: List<Pemilik>
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = !expanded }
+    ) {
+        OutlinedTextField(
+            value = selectedPemilik,
+            onValueChange = { /* Tidak diperlukan untuk dropdown readonly */ },
+            label = { Text("Pilih Pemilik Properti") },
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+            },
+            readOnly = true,
+            modifier = Modifier
+                .fillMaxWidth()
+                .menuAnchor()
+        )
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            listPemilik.forEach { pemilik ->
+                DropdownMenuItem(
+                    onClick = {
+                        onPemilikSelected(pemilik.id_pemilik) // Memperbarui state di ViewModel
+                        expanded = false
+                    },
+                    text = { Text(pemilik.nama_pemilik ?: "Jenis Tidak Diketahui") }
+                )
+            }
+        }
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DropdownManajer(
