@@ -45,6 +45,105 @@ import com.example.pam_uas_andini.ui.viewmodel.properti.PropertiUiState
 import kotlinx.coroutines.launch
 
 
+@Composable
+fun FormProperti(
+    propertiUiEvent: PropertiUiEvent,
+    modifier: Modifier = Modifier,
+    onValueChange: (PropertiUiEvent) -> Unit = {},
+    enabled: Boolean = true,
+    listJenis: List<Jenis>,
+    listPemilik: List<Pemilik>,
+    listManajer: List<Manajer>
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        OutlinedTextField(
+            value = propertiUiEvent.id_properti,
+            onValueChange = { onValueChange(propertiUiEvent.copy(id_properti = it)) },
+            label = { Text("ID Properti") },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = enabled,
+            singleLine = true
+        )
+
+        OutlinedTextField(
+            value = propertiUiEvent.nama_properti,
+            onValueChange = { onValueChange(propertiUiEvent.copy(nama_properti = it)) },
+            label = { Text("Nama Properti") },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = enabled,
+            singleLine = true
+        )
+
+        OutlinedTextField(
+            value = propertiUiEvent.deskripsi_properti,
+            onValueChange = { onValueChange(propertiUiEvent.copy(deskripsi_properti = it)) },
+            label = { Text("Deskripsi") },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = enabled,
+            singleLine = true
+        )
+
+        OutlinedTextField(
+            value = propertiUiEvent.lokasi,
+            onValueChange = { onValueChange(propertiUiEvent.copy(lokasi = it)) },
+            label = { Text("Lokasi") },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = enabled,
+            singleLine = true
+        )
+
+        OutlinedTextField(
+            value = propertiUiEvent.harga,
+            onValueChange = { onValueChange(propertiUiEvent.copy(harga = it)) },
+            label = { Text("Harga") },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = enabled,
+            singleLine = true
+        )
+
+        // Status Radio Group
+        Text(
+            text = "Status",
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier.padding(vertical = 8.dp) // Tambahkan padding jika perlu
+        )
+
+        StatusRadioGroup(
+            selectedStatus = propertiUiEvent.status_properti,
+            onStatusSelected = { selectedStatus ->
+                onValueChange(propertiUiEvent.copy(status_properti = selectedStatus))
+            }
+        )
+
+        DropdownJenis(
+            selectedJenis = propertiUiEvent.id_jenis,
+            onJenisSelected = { selectedJenis ->
+                onValueChange(propertiUiEvent.copy(id_jenis = selectedJenis))
+            },
+            listJenis = listJenis
+        )
+
+        DropdownPemilik(
+            selectedPemilik = propertiUiEvent.id_pemilik,
+            onPemilikSelected = { selectedPemilik ->
+                onValueChange(propertiUiEvent.copy(id_pemilik = selectedPemilik))
+            },
+            listPemilik = listPemilik
+        )
+
+        DropdownManajer(
+            selectedManajer = propertiUiEvent.id_manajer,
+            onManajerSelected = { selectedManajer ->
+                onValueChange(propertiUiEvent.copy(id_manajer = selectedManajer))
+            },
+            listManajer = listManajer
+        )
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DropdownJenis(
